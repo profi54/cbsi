@@ -1,9 +1,10 @@
+// forms.js - все функции для работы с формами
+
 // =====================
 // 1. ОБЩИЕ ФУНКЦИИ СКРОЛЛА
 // =====================
 
 function scrollToSection(sectionId) {
-    console.log('🎯 Scrolling to:', sectionId);
     const element = document.getElementById(sectionId);
     if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
@@ -15,8 +16,6 @@ function scrollToSection(sectionId) {
 // =====================
 
 function focusOnCallbackForm(serviceId = null) {
-    console.log('🎯 Focusing on form (legacy), serviceId:', serviceId);
-
     // СНАЧАЛА добавляем service_id в форму
     if (serviceId) {
         let serviceField = document.getElementById('service-field');
@@ -29,7 +28,6 @@ function focusOnCallbackForm(serviceId = null) {
             if (form) form.appendChild(serviceField);
         }
         serviceField.value = serviceId;
-        console.log('✅ Service ID added:', serviceId);
     }
 
     // ПОТОМ скроллим к форме
@@ -60,14 +58,19 @@ function focusOnCallbackForm(serviceId = null) {
 }
 
 // =====================
-// 3. МОДАЛЬНОЕ ОКНО
+// 3. МОДАЛЬНОЕ ОКНО - ИСПРАВЛЕННАЯ ВЕРСИЯ
 // =====================
 
 let currentServiceId = null;
 
 // Открытие модального окна
 function openModal(serviceId = null, serviceTitle = null) {
-    console.log('🎯 Opening modal, serviceId:', serviceId, 'serviceTitle:', serviceTitle);
+    const modal = document.getElementById('callback-modal');
+
+    if (!modal) {
+        console.error('❌ Modal element not found!');
+        return;
+    }
 
     // Устанавливаем ID услуги если есть
     if (serviceId) {
@@ -84,49 +87,32 @@ function openModal(serviceId = null, serviceTitle = null) {
         }
     }
 
-    const modal = document.getElementById('callback-modal');
-    if (modal) {
-        // Удаляем класс hidden (показываем модальное окно)
-        modal.classList.remove('hidden');
+    // Удаляем класс hidden (показываем модальное окно)
+    modal.classList.remove('hidden');
 
-        // Блокируем скролл на body
-        document.body.classList.add('modal-open');
-        document.body.style.overflow = 'hidden';
-        document.documentElement.style.overflow = 'hidden'; // Для надежности
+    // Блокируем скролл - только через класс, не через style
+    document.body.classList.add('modal-open');
 
-        console.log('✅ Modal opened - classes:', modal.className);
-
-        // Фокусируемся на первом поле после небольшой задержки
-        setTimeout(() => {
-            const nameInput = modal.querySelector('input[name="name"]');
-            if (nameInput) {
-                nameInput.focus();
-            }
-        }, 50);
-    } else {
-        console.error('❌ Modal element not found!');
-        // Проверьте есть ли элемент в DOM
-        console.log('Available elements with callback-modal id:',
-            document.querySelectorAll('#callback-modal').length);
-    }
+    // Фокусируемся на первом поле после небольшой задержки
+    setTimeout(() => {
+        const nameInput = modal.querySelector('input[name="name"]');
+        if (nameInput) {
+            nameInput.focus();
+        }
+    }, 50);
 }
 
 // Закрытие модального окна
 function closeModal() {
-    console.log('🎯 Closing modal');
-
     const modal = document.getElementById('callback-modal');
-    if (modal) {
-        // Добавляем класс hidden (скрываем модальное окно)
-        modal.classList.add('hidden');
 
-        // Разблокируем скролл
-        document.body.classList.remove('modal-open');
-        document.body.style.overflow = 'auto';
-        document.documentElement.style.overflow = 'auto';
+    if (!modal) return;
 
-        console.log('✅ Modal closed');
-    }
+    // Добавляем класс hidden (скрываем модальное окно)
+    modal.classList.add('hidden');
+
+    // Разблокируем скролл
+    document.body.classList.remove('modal-open');
 
     // Сбрасываем значения
     currentServiceId = null;
@@ -164,17 +150,15 @@ function initPhoneMaskBottomForm() {
 }
 
 // =====================
-// 4. ИНИЦИАЛИЗАЦИЯ
+// 4. ИНИЦИАЛИЗАЦИЯ - ИСПРАВЛЕННАЯ ВЕРСИЯ
 // =====================
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('✅ Forms module loaded');
-
     // Закрытие модального окна при клике на overlay
     const overlay = document.querySelector('.modal-overlay');
     if (overlay) {
         overlay.addEventListener('click', function(e) {
-            if (e.target === this) { // Клик именно на overlay, а не на его детей
+            if (e.target === this) {
                 closeModal();
             }
         });
@@ -194,28 +178,35 @@ document.addEventListener('DOMContentLoaded', function() {
     initPhoneMask();
     initPhoneMaskBottomForm();
 
-    // Обработка успешной отправки формы (модальной)
+    // Обработка отправки формы (модальной)
     const modalForm = document.getElementById('callback-form-modal');
     if (modalForm) {
         modalForm.addEventListener('submit', function(e) {
-            console.log('✅ Modal form submitted');
-            // Закрываем модальное окно через секунду
-            setTimeout(function() {
-                closeModal();
-            }, 1000);
+            setTimeout(closeModal, 1000);
         });
     }
 
-    // Для совместимости - если в кнопках используется focusOnCallbackForm
-    // Но теперь лучше использовать openModal()
-    console.log('📝 Note: Use openModal() for new forms, focusOnCallbackForm() for compatibility');
+    // Экстренный патч: проверяем и исправляем стили модального окна
+    setTimeout(function() {
+        const modal = document.getElementById('callback-modal');
+        if (modal) {
+            // Убедимся, что начальные стили правильные
+            const computedStyle = window.getComputedStyle(modal);
 
-    // Дебаг: проверка что все работает
-    console.log('🔍 Modal element exists:',
-        document.getElementById('callback-modal') ? 'YES' : 'NO');
+            // Если display: none, исправляем
+            if (computedStyle.display === 'none') {
+                modal.style.display = 'flex';
+            }
+
+            // Если visibility: hidden и нет класса .hidden, исправляем
+            if (computedStyle.visibility === 'hidden' && !modal.classList.contains('hidden')) {
+                modal.style.visibility = 'visible';
+            }
+
+            console.log('✅ Modal initialized correctly');
+        }
+    }, 500);
 });
-
-console.log('✅ Forms: All form functions loaded');
 
 // Экспортируем функции для глобального использования
 window.openModal = openModal;
