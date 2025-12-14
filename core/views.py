@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from services.models import Service
 from reviews.models import Review
-from core.models import SiteSettings, SiteStatistics
+from core.models import SiteSettings, SiteStatistics, PrivacyPolicy
 
 def home(request):
     context = {
@@ -19,4 +19,4 @@ def privacy_policy(request):  # Эта функция должна быть
         'policy': policy,
         'settings': settings,
     }
-    return render(request, 'core/privacy_policy.html', context)
+    return render(request, 'includes/privacy_policy.html', context)
