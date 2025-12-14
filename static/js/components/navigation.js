@@ -17,8 +17,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Предотвращаем стандартное поведение
             e.preventDefault();
 
-            // Рассчитываем позицию с учетом фиксированного хедера
-            const headerHeight = 80; // Высота вашего фиксированного хедера
+            // Рассчитываем позицию с учетом фиксированного хедера (64px - новая высота)
+            const headerHeight = 64; // Изменили с 80 на 64
             const elementPosition = targetElement.getBoundingClientRect().top;
             const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
 
@@ -34,13 +34,22 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 location.hash = href;
             }
+
+            // Для кнопок новой шапки добавляем класс active
+            if (this.classList.contains('header-nav-btn')) {
+                document.querySelectorAll('.header-nav-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                this.classList.add('active');
+            }
         });
     });
 
-    // 2. Подсветка активной секции (опционально)
+    // 2. Подсветка активной секции для новой шапки
     function highlightActiveNav() {
         const sections = document.querySelectorAll('section[id], div[id]');
-        const navLinks = document.querySelectorAll('.nav-btn[href^="#"]');
+        // Используем новый селектор для кнопок шапки
+        const navButtons = document.querySelectorAll('.header-nav-btn');
 
         let current = '';
         const scrollPos = window.scrollY + 100;
@@ -55,10 +64,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === current) {
-                link.classList.add('active');
+        navButtons.forEach(button => {
+            button.classList.remove('active');
+            if (button.getAttribute('href') === current) {
+                button.classList.add('active');
             }
         });
     }

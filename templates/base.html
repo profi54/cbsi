@@ -25,7 +25,6 @@
 
     {% include 'includes/seo.html' %}
 
-
     <title>{% block title %}ЦВСИ - Сибирский центр выявления скрываемой информации{% endblock %}</title>
 
     <!-- Стили для фиксов -->
@@ -36,18 +35,18 @@
         top: 0;
         width: 100%;
         z-index: 1000;
-        background: rgba(15, 23, 42, 0.95);
+        background: rgba(15, 23, 42, 0.98);
         backdrop-filter: blur(10px);
         border-bottom: 1px solid rgba(100, 116, 139, 0.2);
-        padding: 1rem 0;
+        padding: 0;
     }
 
     .main-content-fixed {
-        margin-top: 80px;
+        margin-top: 64px;
     }
 
     .hero-centered {
-        min-height: calc(100vh - 80px);
+        min-height: calc(100vh - 64px);
         display: flex;
         align-items: center;
     }
@@ -59,25 +58,20 @@
 
     @media (max-width: 768px) {
         .header-fixed {
-            padding: 0.75rem 0;
+            padding: 0;
         }
 
         .main-content-fixed {
-            margin-top: 70px;
+            margin-top: 60px;
         }
 
         .hero-centered {
-            min-height: calc(100vh - 70px);
+            min-height: calc(100vh - 60px);
             padding-top: 20px;
         }
 
         .equipment-size-fix {
             max-width: 100%;
-        }
-
-        .nav-container {
-            flex-direction: column;
-            gap: 0.75rem;
         }
     }
     /* Стили для второго футера с документами */
@@ -131,51 +125,42 @@
 <body class="body-bg text-light font-sans">
 
     <header class="header header-fixed">
-        <nav class="container nav-container">
-            <div class="text-lg md:text-xl lg:text-2xl font-bold text-center md:text-left">
-                <span class="text-accent">ЦВСИ</span> - <span class="text-light">Сибирский центр выявления скрываемой информации</span>
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <!-- Логотип -->
+                <div class="flex items-center">
+                    <div class="font-bold text-xl">
+                        <span class="text-accent">ЦВСИ</span>
+                        <span class="text-light ml-2 hidden lg:inline">
+                            - Сибирский центр выявления скрываемой информации
+                        </span>
+                        <span class="text-light ml-2 lg:hidden">
+                            - Центр выявления информации
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Навигация и телефон -->
+                <div class="flex items-center space-x-3">
+                    <!-- Навигация для десктопа -->
+                    <nav class="hidden md:flex space-x-2">
+                        <a href="#about" class="header-nav-btn">О нас</a>
+                        <a href="#location-card" class="header-nav-btn">Как найти</a>
+                        <a href="#services" class="header-nav-btn">Услуги</a>
+                        <a href="#reviews" class="header-nav-btn">Отзывы</a>
+                        <a href="#research" class="header-nav-btn">Исследования</a>
+                        <a href="#contacts" class="header-nav-btn">Контакты</a>
+                    </nav>
+
+                    <!-- Кнопка телефона -->
+                    {% if settings %}
+                    <a href="tel:{{ settings.phone }}" class="header-phone-btn">
+                        Позвонить
+                    </a>
+                    {% endif %}
+                </div>
             </div>
-
-            <div class="hidden md:flex items-center space-x-3">
-                <a href="#about" class="nav-btn">
-                    <span class="nav-btn-icon"><i class="fas fa-info-circle"></i></span>
-                    <span class="nav-btn-text">О нас</span>
-                </a>
-
-                <a href="#location-card" class="nav-btn">
-                    <span class="nav-btn-icon"><i class="fas fa-map-marker-alt"></i></span>
-                    <span class="nav-btn-text">Как найти</span>
-                </a>
-
-                <a href="#services" class="nav-btn">
-                    <span class="nav-btn-icon"><i class="fas fa-concierge-bell"></i></span>
-                    <span class="nav-btn-text">Услуги</span>
-                </a>
-
-                <a href="#reviews" class="nav-btn">
-                    <span class="nav-btn-icon"><i class="fas fa-star"></i></span>
-                    <span class="nav-btn-text">Отзывы</span>
-                </a>
-
-                <a href="#research" class="nav-btn">
-                    <span class="nav-btn-icon"><i class="fas fa-search"></i></span>
-                    <span class="nav-btn-text">Об исследовании</span>
-                </a>
-
-                <a href="#contacts" class="nav-btn">
-                    <span class="nav-btn-icon"><i class="fas fa-phone"></i></span>
-                    <span class="nav-btn-text">Контакты</span>
-                </a>
-            </div>
-
-            <div class="flex items-center space-x-4">
-                {% if settings %}
-                <a href="tel:{{ settings.phone }}" class="btn btn-primary text-sm md:text-base">
-                    <i class="fas fa-phone mr-2"></i>Позвонить
-                </a>
-                {% endif %}
-            </div>
-        </nav>
+        </div>
     </header>
 
     <main class="main-content main-content-fixed">
@@ -190,10 +175,13 @@
     <script src="{% static 'js/components/forms.js' %}"></script>
     <script src="{% static 'js/components/equipment.js' %}"></script>
     <script src="{% static 'js/app.js' %}"></script>
+
+    <!-- Навигационный скрипт -->
     <script src="{% static 'js/components/navigation.js' %}"></script>
 
     {% block extra_js %}
     {% endblock %}
+
     {% comment %} Модальное окно на всех страницах {% endcomment %}
     {% include 'includes/modal_callback.html' %}
 </body>

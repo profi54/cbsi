@@ -60,7 +60,7 @@
     color: #a0aec0;
 }
 
-/* Кнопки */
+/* Основные кнопки */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -97,10 +97,9 @@
 }
 
 /* ===================== */
-/* МОДАЛЬНЫЕ ОКНА - ИСПРАВЛЕННЫЕ СТИЛИ */
+/* МОДАЛЬНЫЕ ОКНА */
 /* ===================== */
 
-/* Основной контейнер модального окна */
 .modal {
     position: fixed;
     top: 0;
@@ -119,14 +118,12 @@
     transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-/* Скрытое состояние - ВАЖНО: используем visibility а не display! */
 .modal.hidden {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
 }
 
-/* Оверлей */
 .modal-overlay {
     position: absolute;
     top: 0;
@@ -137,7 +134,6 @@
     cursor: pointer;
 }
 
-/* Контейнер для центрирования контента */
 .modal-container {
     position: relative;
     width: 100%;
@@ -146,7 +142,6 @@
     margin: auto;
 }
 
-/* Основное содержимое модального окна */
 .modal-content {
     background: #1e293b;
     border-radius: 0.75rem;
@@ -157,7 +152,6 @@
     z-index: 100001;
 }
 
-/* Анимация появления */
 @keyframes modalFadeIn {
     from {
         opacity: 0;
@@ -169,7 +163,6 @@
     }
 }
 
-/* Заголовок модального окна */
 .modal-header {
     display: flex;
     justify-content: space-between;
@@ -178,7 +171,6 @@
     border-bottom: 1px solid #374151;
 }
 
-/* Кнопка закрытия */
 .modal-close-btn {
     color: #9ca3af;
     font-size: 1.5rem;
@@ -197,7 +189,6 @@
     color: #f1f5f9;
 }
 
-/* Форма в модальном окне */
 .modal-form-input {
     width: 100%;
     padding: 0.75rem 1rem;
@@ -258,7 +249,6 @@
     outline-offset: 2px;
 }
 
-/* Для мобильных устройств */
 @media (max-width: 768px) {
     .modal {
         padding: 0.5rem;
@@ -274,191 +264,95 @@
 }
 
 /* ===================== */
-/* НАВИГАЦИОННЫЕ КНОПКИ */
+/* НОВАЯ ШАПКА - ВАРИАНТ 3 */
 /* ===================== */
 
-.nav-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.5rem 1rem;
-    border-radius: 0.375rem;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    position: relative;
-    overflow: hidden;
-    white-space: nowrap;
-}
-
-.nav-link:hover {
-    background: rgba(99, 179, 237, 0.1);
-    transform: translateY(-1px);
-}
-
-.nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background: linear-gradient(90deg, #63b3ed, #4299e1);
-    transition: all 0.3s ease;
-    transform: translateX(-50%);
-}
-
-.nav-link:hover::after {
-    width: 80%;
-}
-
-/* Активная ссылка */
-.nav-link.active {
-    color: #63b3ed;
-    background: rgba(99, 179, 237, 0.15);
-}
-
-.nav-link.active::after {
-    width: 80%;
-}
-
-/* Адаптивность */
-@media (max-width: 768px) {
-    .nav-link {
-        padding: 0.4rem 0.75rem;
-        font-size: 0.9rem;
-    }
-}
-/* ===================== */
-/* СТИЛИЗОВАННЫЕ КНОПКИ НАВИГАЦИИ */
-/* ===================== */
-
-.nav-btn {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.9) 100%);
-    border: 1px solid rgba(99, 179, 237, 0.3);
-    color: #e2e8f0;
-    font-weight: 500;
-    font-size: 0.9rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    text-decoration: none;
-    white-space: nowrap;
+/* Шапка */
+.header {
+    background: rgba(15, 23, 42, 0.98);
     backdrop-filter: blur(10px);
-    box-shadow:
-        0 2px 4px rgba(0, 0, 0, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
-}
-
-.nav-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(99, 179, 237, 0.1) 0%, rgba(66, 153, 225, 0.1) 100%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: -1;
-}
-
-.nav-btn:hover {
-    color: #63b3ed;
-    border-color: #63b3ed;
-    transform: translateY(-2px);
-    box-shadow:
-        0 8px 16px rgba(0, 0, 0, 0.3),
-        0 2px 4px rgba(99, 179, 237, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.15);
-}
-
-.nav-btn:hover::before {
-    opacity: 1;
-}
-
-.nav-btn.active {
-    background: linear-gradient(135deg, rgba(99, 179, 237, 0.15) 0%, rgba(66, 153, 225, 0.15) 100%);
-    border-color: #63b3ed;
-    color: #63b3ed;
-    box-shadow:
-        0 4px 12px rgba(99, 179, 237, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
-.nav-btn.active::before {
-    opacity: 1;
-}
-
-/* Иконки в кнопках */
-.nav-btn-icon {
-    margin-right: 0.5rem;
-    font-size: 0.9em;
+    border-bottom: 1px solid rgba(100, 116, 139, 0.2);
+    height: 64px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    transition: transform 0.3s ease;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
 }
 
-.nav-btn:hover .nav-btn-icon {
-    transform: scale(1.1);
+/* Кнопки навигации в шапке */
+.header-nav-btn {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    min-width: 85px;
+    text-align: center;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 0.375rem;
+    color: #cbd5e0;
+    font-weight: 500;
+    font-size: 0.875rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    white-space: nowrap;
 }
 
-/* Текст в кнопках */
-.nav-btn-text {
+.header-nav-btn:hover {
+    background: rgba(99, 179, 237, 0.1);
+    color: #63b3ed;
+    border-color: rgba(99, 179, 237, 0.3);
+}
+
+.header-nav-btn.active {
+    background: rgba(99, 179, 237, 0.15);
+    color: #63b3ed;
+    border-color: #63b3ed;
+}
+
+/* Кнопка телефона в шапке */
+.header-phone-btn {
+    display: inline-block;
+    padding: 0.6rem 1.5rem;
+    background: linear-gradient(135deg, #2b6cb0 0%, #4299e1 100%);
+    border: none;
+    border-radius: 0.5rem;
+    color: white;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
     transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    white-space: nowrap;
 }
 
-/* Анимация пульсации для активной кнопки */
-@keyframes navBtnPulse {
-    0% {
-        box-shadow:
-            0 4px 12px rgba(99, 179, 237, 0.2),
-            inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    }
-    50% {
-        box-shadow:
-            0 4px 12px rgba(99, 179, 237, 0.4),
-            0 0 20px rgba(99, 179, 237, 0.2),
-            inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    }
-    100% {
-        box-shadow:
-            0 4px 12px rgba(99, 179, 237, 0.2),
-            inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    }
+.header-phone-btn:hover {
+    background: linear-gradient(135deg, #3182ce 0%, #63b3ed 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-.nav-btn.active {
-    animation: navBtnPulse 2s infinite;
-}
-
-/* Адаптивность */
+/* Адаптивность шапки */
 @media (max-width: 1024px) {
-    .nav-btn {
-        padding: 0.4rem 0.75rem;
+    .header-nav-btn {
+        min-width: 80px;
+        padding: 0.5rem 0.8rem;
         font-size: 0.85rem;
     }
 
-    .nav-btn-icon {
-        margin-right: 0.4rem;
-        font-size: 0.85em;
+    .header-phone-btn {
+        padding: 0.5rem 1.2rem;
+        font-size: 0.85rem;
     }
 }
 
-/* Для очень маленьких экранов */
 @media (max-width: 768px) {
-    .nav-btn {
-        padding: 0.35rem 0.6rem;
-        font-size: 0.8rem;
+    .header {
+        height: 60px;
     }
 
-    .nav-btn-icon {
-        margin-right: 0.3rem;
-        font-size: 0.8em;
+    .header-phone-btn {
+        padding: 0.4rem 1rem;
+        font-size: 0.8rem;
     }
 }
