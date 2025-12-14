@@ -1,5 +1,3 @@
-// forms.js - все функции для работы с формами
-
 // =====================
 // 1. ОБЩИЕ ФУНКЦИИ СКРОЛЛА
 // =====================
@@ -88,11 +86,28 @@ function openModal(serviceId = null, serviceTitle = null) {
 
     const modal = document.getElementById('callback-modal');
     if (modal) {
+        // Удаляем класс hidden (показываем модальное окно)
         modal.classList.remove('hidden');
+
+        // Блокируем скролл на body
+        document.body.classList.add('modal-open');
         document.body.style.overflow = 'hidden';
-        console.log('✅ Modal opened');
+        document.documentElement.style.overflow = 'hidden'; // Для надежности
+
+        console.log('✅ Modal opened - classes:', modal.className);
+
+        // Фокусируемся на первом поле после небольшой задержки
+        setTimeout(() => {
+            const nameInput = modal.querySelector('input[name="name"]');
+            if (nameInput) {
+                nameInput.focus();
+            }
+        }, 50);
     } else {
         console.error('❌ Modal element not found!');
+        // Проверьте есть ли элемент в DOM
+        console.log('Available elements with callback-modal id:',
+            document.querySelectorAll('#callback-modal').length);
     }
 }
 
@@ -102,8 +117,15 @@ function closeModal() {
 
     const modal = document.getElementById('callback-modal');
     if (modal) {
+        // Добавляем класс hidden (скрываем модальное окно)
         modal.classList.add('hidden');
+
+        // Разблокируем скролл
+        document.body.classList.remove('modal-open');
         document.body.style.overflow = 'auto';
+        document.documentElement.style.overflow = 'auto';
+
+        console.log('✅ Modal closed');
     }
 
     // Сбрасываем значения
@@ -151,12 +173,21 @@ document.addEventListener('DOMContentLoaded', function() {
     // Закрытие модального окна при клике на overlay
     const overlay = document.querySelector('.modal-overlay');
     if (overlay) {
-        overlay.addEventListener('click', closeModal);
+        overlay.addEventListener('click', function(e) {
+            if (e.target === this) { // Клик именно на overlay, а не на его детей
+                closeModal();
+            }
+        });
     }
 
     // Закрытие модального окна на ESC
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') closeModal();
+        if (e.key === 'Escape') {
+            const modal = document.getElementById('callback-modal');
+            if (modal && !modal.classList.contains('hidden')) {
+                closeModal();
+            }
+        }
     });
 
     // Инициализация масок телефона
@@ -178,6 +209,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // Для совместимости - если в кнопках используется focusOnCallbackForm
     // Но теперь лучше использовать openModal()
     console.log('📝 Note: Use openModal() for new forms, focusOnCallbackForm() for compatibility');
+
+    // Дебаг: проверка что все работает
+    console.log('🔍 Modal element exists:',
+        document.getElementById('callback-modal') ? 'YES' : 'NO');
 });
 
 console.log('✅ Forms: All form functions loaded');
+
+// Экспортируем функции для глобального использования
+window.openModal = openModal;
+window.closeModal = closeModal;
+window.scrollToSection = scrollToSection;
+window.focusOnCallbackForm = focusOnCallbackForm;

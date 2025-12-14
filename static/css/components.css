@@ -103,14 +103,22 @@
 .modal {
     position: fixed;
     inset: 0;
-    z-index: 50;
+    z-index: 9999; /* Увеличил z-index */
     overflow-y: auto;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease, visibility 0.3s ease; /* Добавил visibility */
 }
 
 .modal.hidden {
     opacity: 0;
+    visibility: hidden; /* Важно: скрываем из потока */
     pointer-events: none;
+}
+
+/* Когда модальное окно не скрыто */
+.modal:not(.hidden) {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
 }
 
 .modal-overlay {
@@ -118,6 +126,7 @@
     inset: 0;
     background: rgba(0, 0, 0, 0.75);
     backdrop-filter: blur(4px);
+    z-index: 9998;
 }
 
 .modal-container {
@@ -127,27 +136,30 @@
     align-items: center;
     justify-content: center;
     padding: 1rem;
+    z-index: 9999;
 }
 
 .modal-content {
-    background: #1e293b; /* bg-dark */
-    border-radius: 0.75rem; /* rounded-xl */
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); /* shadow-2xl */
-    max-width: 28rem; /* max-w-md */
+    position: relative;
+    background: #1e293b;
+    border-radius: 0.75rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    max-width: 28rem;
     width: 100%;
     margin-left: auto;
     margin-right: auto;
     animation: modalFadeIn 0.3s ease;
+    z-index: 10000;
 }
 
 @keyframes modalFadeIn {
     from {
         opacity: 0;
-        transform: translateY(-20px);
+        transform: translateY(-20px) scale(0.95);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
 }
 
@@ -155,39 +167,45 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.5rem; /* p-6 */
-    border-bottom: 1px solid #374151; /* border-gray-700 */
+    padding: 1.5rem;
+    border-bottom: 1px solid #374151;
 }
 
 .modal-close-btn {
-    color: #9ca3af; /* text-gray-400 */
-    font-size: 1.5rem; /* text-2xl */
+    color: #9ca3af;
+    font-size: 1.5rem;
     line-height: 1;
     transition: color 0.2s;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
 }
 
 .modal-close-btn:hover {
-    color: #f1f5f9; /* text-light */
+    color: #f1f5f9;
 }
 
 /* Форма в модальном окне */
 .modal-form-input {
     width: 100%;
-    padding: 0.75rem 1rem; /* px-4 py-3 */
-    border-radius: 0.5rem; /* rounded-lg */
-    background: #1e293b; /* bg-dark-secondary */
-    border: 1px solid #4b5563; /* border-gray-600 */
-    color: #f1f5f9; /* text-light */
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    background: #1e293b;
+    border: 1px solid #4b5563;
+    color: #f1f5f9;
     transition: border-color 0.2s;
+    font-size: 1rem;
 }
 
 .modal-form-input:focus {
     outline: none;
-    border-color: #63b3ed; /* border-accent */
+    border-color: #63b3ed;
+    box-shadow: 0 0 0 3px rgba(99, 179, 237, 0.1);
 }
 
 .modal-form-input::placeholder {
-    color: #9ca3af; /* placeholder-gray-400 */
+    color: #9ca3af;
 }
 
 .modal-form-textarea {
@@ -199,26 +217,28 @@
     color: #f1f5f9;
     transition: border-color 0.2s;
     resize: vertical;
-    min-height: 6rem; /* rows="4" */
+    min-height: 6rem;
+    font-family: inherit;
+    font-size: 1rem;
 }
 
 .modal-form-textarea:focus {
     outline: none;
     border-color: #63b3ed;
+    box-shadow: 0 0 0 3px rgba(99, 179, 237, 0.1);
 }
 
 .modal-checkbox {
-    margin-top: 0.25rem; /* mt-1 */
-    border-radius: 0.25rem; /* rounded */
-    border-color: #4b5563; /* border-gray-600 */
-    color: #63b3ed; /* text-accent */
+    margin-top: 0.25rem;
+    border-radius: 0.25rem;
+    border-color: #4b5563;
+    color: #63b3ed;
+    width: 1.25rem;
+    height: 1.25rem;
+    cursor: pointer;
 }
 
 .modal-checkbox:focus {
-    --tw-ring-color: #63b3ed; /* focus:ring-accent */
-}
-
-/* Скрытие элементов */
-.hidden {
-    display: none !important;
+    outline: 2px solid #63b3ed;
+    outline-offset: 2px;
 }
