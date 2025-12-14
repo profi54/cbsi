@@ -131,7 +131,7 @@
     </section>
 
     <!-- Услуги -->
-    <section id="services" class="py-12 md:py-20" aria-labelledby="services-heading">
+    <section id="services" class="py-12 md:py-20" aria-labelledby="services-heading" data-version="{{ SERVICES_VERSION }}">
         <div class="container mx-auto px-4">
             <div class="content-overlay-enhanced p-6 sm:p-8 md:p-12">
                 <h2 id="services-heading" class="text-3xl sm:text-4xl font-bold text-light mb-4 text-center">Услуги центра</h2>
@@ -276,7 +276,7 @@
     </section>
 
     <!-- Отзывы -->
-    <section id="reviews" class="py-12 md:py-20" aria-labelledby="reviews-heading">
+    <section id="reviews" class="py-12 md:py-20" aria-labelledby="reviews-heading" data-version="{{ REVIEWS_VERSION }}">
         <div class="container mx-auto px-4">
             <div class="content-overlay-enhanced p-6 sm:p-8 md:p-12">
                 <h2 id="reviews-heading" class="text-3xl sm:text-4xl font-bold text-light mb-4 text-center">Отзывы клиентов</h2>
@@ -323,7 +323,7 @@
 
     <!-- Блок "Об исследованиях" (3 колонки) -->
     {% if research_info %}
-    <section id="research" class="py-12 md:py-20 bg-dark-secondary" data-v="{{ CACHE_VERSION }}">
+    <section id="research" class="py-12 md:py-20 bg-dark-secondary" data-version="{{ RESEARCH_VERSION }}">
         <div class="container mx-auto px-4">
             <div class="content-overlay-enhanced p-6 sm:p-8 md:p-12">
                 <h2 class="text-3xl md:text-4xl font-bold text-light mb-8 md:mb-12 text-center">

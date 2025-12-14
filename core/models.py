@@ -1,5 +1,5 @@
 from django.db import models
-
+import time
 
 class SiteSettings(models.Model):
     phone = models.CharField('Телефон', max_length=20)
@@ -15,6 +15,18 @@ class SiteSettings(models.Model):
 
     def __str__(self):
         return "Настройки сайта"
+
+    cache_version = models.IntegerField(default=0)
+
+    def save(self, *args, **kwargs):
+        # Обновляем версию при каждом сохранении
+        self.cache_version = int(time.time())
+        super().save(*args, **kwargs)
+
+    @classmethod
+    def get_cache_version(cls):
+        settings = cls.objects.first()
+        return settings.cache_version if settings else int(time.time())
 
 
 
