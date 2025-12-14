@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 2. Подсветка активной секции (опционально)
     function highlightActiveNav() {
         const sections = document.querySelectorAll('section[id], div[id]');
-        const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
+        const navLinks = document.querySelectorAll('.nav-btn[href^="#"]');
 
         let current = '';
         const scrollPos = window.scrollY + 100;
