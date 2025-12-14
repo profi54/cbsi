@@ -352,3 +352,9 @@
         font-size: 0.85rem;
     }
 }
+
+/* Предотвращение скролла при открытой модалке */
+body.modal-open {
+    overflow: hidden !important;
+    height: 100vh !important;
+}

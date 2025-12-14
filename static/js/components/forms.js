@@ -1,85 +1,29 @@
-// forms.js - все функции для работы с формами
-
-// =====================
-// 1. ОБЩИЕ ФУНКЦИИ СКРОЛЛА
-// =====================
-
-function scrollToSection(sectionId) {
-    const element = document.getElementById(sectionId);
-    if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-    }
-}
-
-// =====================
-// 2. ФОРМА ВНИЗУ СТРАНИЦЫ (для совместимости)
-// =====================
-
-function focusOnCallbackForm(serviceId = null) {
-    // СНАЧАЛА добавляем service_id в форму
-    if (serviceId) {
-        let serviceField = document.getElementById('service-field');
-        if (!serviceField) {
-            serviceField = document.createElement('input');
-            serviceField.type = 'hidden';
-            serviceField.name = 'service_id';
-            serviceField.id = 'service-field';
-            const form = document.getElementById('callback-form');
-            if (form) form.appendChild(serviceField);
-        }
-        serviceField.value = serviceId;
-    }
-
-    // ПОТОМ скроллим к форме
-    const contactsSection = document.getElementById('contacts');
-    if (contactsSection) {
-        contactsSection.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    // Highlight and focus name field
-    setTimeout(() => {
-        const nameField = document.getElementById('name-field');
-        if (nameField) {
-            // Добавляем классы для подсветки
-            nameField.classList.add('field-highlight', 'field-pulse');
-            nameField.focus();
-            nameField.setSelectionRange(0, 0);
-
-            // Убираем подсветку при вводе или через время
-            const removeHighlight = () => {
-                nameField.classList.remove('field-highlight', 'field-pulse');
-                nameField.removeEventListener('input', removeHighlight);
-            };
-
-            nameField.addEventListener('input', removeHighlight);
-            setTimeout(removeHighlight, 3000);
-        }
-    }, 800);
-}
-
-// =====================
-// 3. МОДАЛЬНОЕ ОКНО - ИСПРАВЛЕННАЯ ВЕРСИЯ
-// =====================
-
+let currentScrollPosition = 0;
 let currentServiceId = null;
+
+// =====================
+// МОДАЛЬНОЕ ОКНО
+// =====================
 
 // Открытие модального окна
 function openModal(serviceId = null, serviceTitle = null, event = null) {
     // Получаем event если он передан
     const e = event || window.event;
 
-    // ВАЖНО: предотвращаем поведение по умолчанию (скролл и т.д.)
+    // Предотвращаем поведение по умолчанию
     if (e) {
         e.preventDefault();
         e.stopPropagation();
     }
 
     const modal = document.getElementById('callback-modal');
-
     if (!modal) {
         console.error('❌ Modal element not found!');
         return false;
     }
+
+    // Сохраняем текущую позицию скролла
+    currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
 
     // Устанавливаем ID услуги если есть
     if (serviceId) {
@@ -96,21 +40,24 @@ function openModal(serviceId = null, serviceTitle = null, event = null) {
         }
     }
 
-    // Удаляем класс hidden (показываем модальное окно)
+    // Показываем модальное окно
     modal.classList.remove('hidden');
 
-    // Блокируем скролл
+    // Блокируем скролл и фиксируем позицию
     document.body.classList.add('modal-open');
+    document.body.style.top = `-${currentScrollPosition}px`;
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
 
-    // Фокусируемся на первом поле после небольшой задержки
+    // Фокусируемся на первом поле
     setTimeout(() => {
         const nameInput = modal.querySelector('input[name="name"]');
         if (nameInput) {
-            nameInput.focus();
+            nameInput.focus({ preventScroll: true });
         }
     }, 50);
 
-    return false; // Дополнительная защита для обработчиков onclick
+    return false;
 }
 
 // Закрытие модального окна
@@ -122,14 +69,19 @@ function closeModal(event = null) {
     }
 
     const modal = document.getElementById('callback-modal');
-
     if (!modal) return false;
 
-    // Добавляем класс hidden (скрываем модальное окно)
+    // Скрываем модальное окно
     modal.classList.add('hidden');
 
-    // Разблокируем скролл
+    // Восстанавливаем скролл
     document.body.classList.remove('modal-open');
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+
+    // Восстанавливаем позицию скролла
+    window.scrollTo(0, currentScrollPosition);
 
     // Сбрасываем значения
     currentServiceId = null;
@@ -143,33 +95,47 @@ function closeModal(event = null) {
         modalTitle.textContent = 'Заявка на обратный звонок';
     }
 
+    // Сбрасываем форму если есть
+    const form = document.getElementById('callback-form-modal');
+    if (form) {
+        form.reset();
+    }
+
     return false;
 }
 
-// Маска для телефона в модальном окне
-function initPhoneMask() {
-    const phoneInput = document.getElementById('modal-phone');
-    if (phoneInput) {
-        phoneInput.addEventListener('input', function(e) {
-            let x = e.target.value.replace(/\D/g, '').match(/(\d{0,1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/);
-            e.target.value = !x[2] ? x[1] : '+7 (' + x[2] + (x[3] ? ') ' + x[3] : '') + (x[4] ? '-' + x[4] : '') + (x[5] ? '-' + x[5] : '');
+// =====================
+// ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
+// =====================
+
+function scrollToSection(sectionId) {
+    const element = document.getElementById(sectionId);
+    if (element) {
+        const headerHeight = 64; // Высота шапки
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
+
+        window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
         });
     }
 }
 
-// Маска для телефона в форме внизу
-function initPhoneMaskBottomForm() {
-    const phoneInput = document.getElementById('phone-field');
-    if (phoneInput) {
-        phoneInput.addEventListener('input', function(e) {
+// Маска для телефона
+function initPhoneMask(inputId) {
+    const input = document.getElementById(inputId);
+    if (input) {
+        input.addEventListener('input', function(e) {
             let x = e.target.value.replace(/\D/g, '').match(/(\d{0,1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/);
-            e.target.value = !x[2] ? x[1] : '+7 (' + x[2] + (x[3] ? ') ' + x[3] : '') + (x[4] ? '-' + x[4] : '') + (x[5] ? '-' + x[5] : '');
+            e.target.value = !x[2] ? x[1] : '+7 (' + x[2] + (x[3] ? ') ' + x[3] : '') +
+                                            (x[4] ? '-' + x[4] : '') + (x[5] ? '-' + x[5] : '');
         });
     }
 }
 
 // =====================
-// 4. ИНИЦИАЛИЗАЦИЯ - ИСПРАВЛЕННАЯ ВЕРСИЯ
+// ИНИЦИАЛИЗАЦИЯ
 // =====================
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -194,92 +160,27 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Инициализация масок телефона
-    initPhoneMask();
-    initPhoneMaskBottomForm();
+    initPhoneMask('modal-phone');
 
-    // Обработка отправки формы (модальной)
+    // Проверяем наличие формы внизу (для совместимости)
+    const phoneField = document.getElementById('phone-field');
+    if (phoneField) {
+        initPhoneMask('phone-field');
+    }
+
+    // Обработка отправки модальной формы
     const modalForm = document.getElementById('callback-form-modal');
     if (modalForm) {
         modalForm.addEventListener('submit', function(e) {
-            // Не закрываем сразу, ждем отправки
+            // Можно добавить AJAX отправку здесь
             setTimeout(() => {
                 closeModal();
             }, 1000);
         });
     }
-
-    // Глобальный обработчик для кнопок без preventDefault
-    document.addEventListener('click', function(e) {
-        const button = e.target.closest('button');
-        if (button) {
-            const onclick = button.getAttribute('onclick');
-            if (onclick && onclick.includes('openModal(') && !onclick.includes('event')) {
-                // Нашли кнопку без передачи event
-                e.preventDefault();
-                e.stopPropagation();
-
-                // Извлекаем параметры
-                const match = onclick.match(/openModal\(([^)]+)\)/);
-                if (match) {
-                    const params = match[1];
-                    // Парсим параметры
-                    if (params.includes("'")) {
-                        const serviceMatch = params.match(/(\d+),\s*'([^']+)'/);
-                        if (serviceMatch) {
-                            openModal(serviceMatch[1], serviceMatch[2], e);
-                        }
-                    } else if (params.trim() === '') {
-                        openModal(null, null, e);
-                    }
-                }
-                return false;
-            }
-        }
-    }, true);
-
-    // Экстренный патч: проверяем и исправляем стили модального окна
-    setTimeout(function() {
-        const modal = document.getElementById('callback-modal');
-        if (modal) {
-            // Убедимся, что начальные стили правильные
-            const computedStyle = window.getComputedStyle(modal);
-
-            // Если display: none, исправляем (но сохраняем hidden класс)
-            if (computedStyle.display === 'none' && !modal.classList.contains('hidden')) {
-                modal.style.display = 'flex';
-            }
-
-            // Если visibility: hidden и нет класса .hidden, исправляем
-            if (computedStyle.visibility === 'hidden' && !modal.classList.contains('hidden')) {
-                modal.style.visibility = 'visible';
-            }
-        }
-    }, 500);
 });
 
 // Экспортируем функции для глобального использования
 window.openModal = openModal;
 window.closeModal = closeModal;
 window.scrollToSection = scrollToSection;
-window.focusOnCallbackForm = focusOnCallbackForm;
-
-// Глобальный обработчик для старых кнопок без event параметра
-(function() {
-    // Перехватываем старые обработчики
-    const originalAddEventListener = EventTarget.prototype.addEventListener;
-    EventTarget.prototype.addEventListener = function(type, listener, options) {
-        if (type === 'click' && listener && listener.toString().includes('openModal')) {
-            const wrappedListener = function(e) {
-                if (listener.length === 0) {
-                    // Если функция не принимает параметры
-                    e.preventDefault();
-                    e.stopPropagation();
-                    return listener.call(this);
-                }
-                return listener.call(this, e);
-            };
-            return originalAddEventListener.call(this, type, wrappedListener, options);
-        }
-        return originalAddEventListener.call(this, type, listener, options);
-    };
-})();
