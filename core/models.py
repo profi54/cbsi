@@ -17,18 +17,6 @@ class SiteSettings(models.Model):
         return "Настройки сайта"
 
 
-class SiteStatistics(models.Model):
-    tests_completed = models.PositiveIntegerField('Проведенных проверок', default=0)
-    corporate_clients = models.PositiveIntegerField('Корпоративных клиентов', default=0)
-    years_experience = models.PositiveIntegerField('Лет на рынке', default=0)
-    updated_at = models.DateTimeField('Обновлено', auto_now=True)
-
-    class Meta:
-        verbose_name = 'Статистика сайта'
-        verbose_name_plural = 'Статистика сайта'
-
-    def __str__(self):
-        return "Статистика сайта"
 
 
 class PrivacyPolicy(models.Model):

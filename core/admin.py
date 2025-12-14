@@ -10,14 +10,6 @@ class SiteSettingsAdmin(admin.ModelAdmin):
         return not SiteSettings.objects.exists()
 
 
-@admin.register(SiteStatistics)
-class SiteStatisticsAdmin(admin.ModelAdmin):
-    list_display = ['tests_completed', 'corporate_clients', 'years_experience', 'updated_at']
-    list_display_links = ['updated_at']
-    list_editable = ['tests_completed', 'corporate_clients', 'years_experience']
-
-    def has_add_permission(self, request):
-        return not SiteStatistics.objects.exists()
 
 
 @admin.register(PrivacyPolicy)

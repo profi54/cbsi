@@ -8,7 +8,7 @@ def home(request):
         'services': Service.objects.filter(is_active=True).order_by('order'),
         'reviews': Review.objects.filter(is_published=True).order_by('-created_at')[:6],
         'settings': SiteSettings.objects.first(),
-        'statistics': SiteStatistics.objects.first(),
+        'research_info': ResearchInfo.objects.filter(is_active=True).first(),
     }
     return render(request, 'core/home.html', context)
 
