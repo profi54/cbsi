@@ -80,6 +80,38 @@
             gap: 0.75rem;
         }
     }
+    /* Стили для второго футера с документами */
+    .footer-documents {
+        background: rgba(15, 23, 42, 0.98);
+        margin-top: 0;
+    }
+
+    .footer-documents h4 {
+        font-family: inherit;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+    }
+
+    .footer-documents a {
+        transition: color 0.2s ease;
+    }
+
+    .footer-documents a:hover {
+        color: #63b3ed !important;
+    }
+
+    /* Адаптивность */
+    @media (max-width: 768px) {
+        .footer-documents .max-w-md {
+            max-width: 100%;
+            padding: 0 1rem;
+        }
+
+        .footer-documents {
+            padding-top: 1.5rem;
+            padding-bottom: 2rem;
+        }
+    }
     </style>
 
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
