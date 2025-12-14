@@ -345,3 +345,45 @@
         display: none !important;
     }
 }
+
+/* ===== АДАПТАЦИЯ ГЕРОЙ-СЕКЦИИ ===== */
+
+/* Для мобильных телефонов */
+@media (max-width: 768px) {
+    .hero-centered {
+        min-height: 70vh !important; /* Было calc(100vh - 68px) */
+        padding-top: 40px !important;
+        padding-bottom: 40px !important;
+    }
+
+    /* Если есть дополнительный отступ сверху из-за фиксированной шапки */
+    .hero-section {
+        margin-top: 0 !important;
+        padding-top: 20px !important;
+    }
+
+    /* Уменьшаем размер шрифта заголовка в герое */
+    .hero-title {
+        font-size: 2rem !important;
+        margin-bottom: 1rem !important;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem !important;
+        line-height: 1.4 !important;
+    }
+}
+
+/* Для планшетов */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .hero-centered {
+        min-height: 80vh !important;
+    }
+}
+
+/* Для десктопа - немного уменьшаем */
+@media (min-width: 1025px) {
+    .hero-centered {
+        min-height: 85vh !important; /* Было 100vh или calc(100vh - 64px) */
+    }
+}
