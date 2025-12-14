@@ -1,3 +1,11 @@
+# Виртуальные среды Python (новые правила)
+venv/
+.venv/
+env/
+ENV/
+*.venv/
+env.bak/
+venv.bak/
 
 *.sqlite3
 *.db
