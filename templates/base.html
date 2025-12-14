@@ -124,30 +124,94 @@
 </head>
 <body class="body-bg text-light font-sans">
 
-    <header class="header header-fixed">
+   <header class="header header-fixed">
         <div class="container mx-auto px-4">
-            <!-- ВЕРХНЯЯ строка: ЦВСИ и кнопка Позвонить -->
             <div class="flex justify-between items-center py-3">
-                <!-- Текст ЦВСИ -->
                 <div class="text-xl font-bold">
                     <span class="text-accent">ЦВСИ</span>
-                    <span class="text-light"> - Сибирский центр выявления скрываемой информации</span>
+                    <span class="text-light hidden md:inline"> - Сибирский центр выявления скрываемой информации</span>
+                    <span class="text-light md:hidden"> - Центр выявления информации</span>
                 </div>
 
-                <!-- Голубая кнопка Позвонить -->
-                <a href="tel:{{ settings.phone }}" class="phone-btn-blue">
-                    <i class="fas fa-phone mr-2"></i>Позвонить
-                </a>
+                <div class="flex items-center space-x-4">
+                    <a href="tel:{{ settings.phone }}" class="phone-btn-blue hidden sm:inline-flex">
+                        <i class="fas fa-phone mr-2"></i>Позвонить
+                    </a>
+
+                    <a href="tel:{{ settings.phone }}" class="phone-icon-blue sm:hidden">
+                        <i class="fas fa-phone text-xl"></i>
+                    </a>
+
+                    <button class="md:hidden burger-menu ml-2 text-2xl text-light hover:text-accent transition-colors"
+                            id="burgerBtn" aria-label="Открыть меню">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
             </div>
 
-            <!-- НИЖНЯЯ строка: 6 кнопок навигации -->
-            <div class="flex justify-center space-x-4 py-2">
+            <div class="hidden md:flex justify-center space-x-4 py-2">
                 <a href="#about" class="nav-btn">О нас</a>
                 <a href="#location-card" class="nav-btn">Как нас найти</a>
                 <a href="#services" class="nav-btn">Услуги</a>
                 <a href="#reviews" class="nav-btn">Отзывы</a>
                 <a href="#research" class="nav-btn">Об исследовании</a>
                 <a href="#contacts" class="nav-btn">Контакты</a>
+            </div>
+        </div>
+
+        <!-- Мобильное меню (выпадающее) -->
+        <div class="mobile-menu hidden md:hidden fixed inset-0 bg-slate-900/95 backdrop-blur-lg z-50" id="mobileMenu">
+            <!-- Заголовок меню -->
+            <div class="flex justify-between items-center p-4 border-b border-slate-700/50">
+                <div class="text-2xl font-bold">
+                    <span class="text-accent">ЦВСИ</span>
+                    <span class="text-light"> - Центр выявления информации</span>
+                </div>
+                <button class="close-menu text-3xl text-light hover:text-accent transition-colors p-2"
+                        id="closeMenu" aria-label="Закрыть меню">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Навигационные ссылки -->
+            <nav class="p-6 space-y-3">
+                <a href="#about" class="mobile-nav-btn">
+                    <i class="fas fa-info-circle mr-3 text-accent"></i>
+                    <span>О нас</span>
+                </a>
+
+                <a href="#location-card" class="mobile-nav-btn">
+                    <i class="fas fa-map-marker-alt mr-3 text-accent"></i>
+                    <span>Как нас найти</span>
+                </a>
+
+                <a href="#services" class="mobile-nav-btn">
+                    <i class="fas fa-clipboard-list mr-3 text-accent"></i>
+                    <span>Услуги</span>
+                </a>
+
+                <a href="#reviews" class="mobile-nav-btn">
+                    <i class="fas fa-star mr-3 text-accent"></i>
+                    <span>Отзывы</span>
+                </a>
+
+                <a href="#research" class="mobile-nav-btn">
+                    <i class="fas fa-microscope mr-3 text-accent"></i>
+                    <span>Об исследовании</span>
+                </a>
+
+                <a href="#contacts" class="mobile-nav-btn">
+                    <i class="fas fa-address-book mr-3 text-accent"></i>
+                    <span>Контакты</span>
+                </a>
+            </nav>
+
+            <!-- Кнопка позвонить в меню -->
+            <div class="absolute bottom-0 left-0 right-0 p-6">
+                <a href="tel:{{ settings.phone }}" class="mobile-phone-btn">
+                    <i class="fas fa-phone mr-3"></i>
+                    <span>Позвонить сейчас</span>
+                </a>
             </div>
         </div>
     </header>
