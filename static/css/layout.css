@@ -38,3 +38,27 @@
         padding-top: 7rem;
     }
 }
+
+/* Ограничение размера картинки оборудования */
+.equipment-img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Для десктопа - не больше 400px в ширину */
+@media (min-width: 769px) {
+    .equipment-img {
+        max-width: 400px;
+        max-height: 400px;
+    }
+}
+
+/* Для мобильных - не больше 2500px */
+@media (max-width: 768px) {
+    .equipment-img {
+        max-width: 250px;
+        max-height: 250px;
+    }
+}
