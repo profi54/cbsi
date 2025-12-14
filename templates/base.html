@@ -126,39 +126,28 @@
 
     <header class="header header-fixed">
         <div class="container mx-auto px-4">
-            <div class="flex items-center justify-between h-16">
-                <!-- Логотип -->
-                <div class="flex items-center">
-                    <div class="font-bold text-xl">
-                        <span class="text-accent">ЦВСИ</span>
-                        <span class="text-light ml-2 hidden lg:inline">
-                            - Сибирский центр выявления скрываемой информации
-                        </span>
-                        <span class="text-light ml-2 lg:hidden">
-                            - Центр выявления информации
-                        </span>
-                    </div>
+            <!-- ВЕРХНЯЯ строка: ЦВСИ и кнопка Позвонить -->
+            <div class="flex justify-between items-center py-3">
+                <!-- Текст ЦВСИ -->
+                <div class="text-xl font-bold">
+                    <span class="text-accent">ЦВСИ</span>
+                    <span class="text-light"> - Сибирский центр выявления скрываемой информации</span>
                 </div>
 
-                <!-- Навигация и телефон -->
-                <div class="flex items-center space-x-3">
-                    <!-- Навигация для десктопа -->
-                    <nav class="hidden md:flex space-x-2">
-                        <a href="#about" class="header-nav-btn">О нас</a>
-                        <a href="#location-card" class="header-nav-btn">Как найти</a>
-                        <a href="#services" class="header-nav-btn">Услуги</a>
-                        <a href="#reviews" class="header-nav-btn">Отзывы</a>
-                        <a href="#research" class="header-nav-btn">Исследования</a>
-                        <a href="#contacts" class="header-nav-btn">Контакты</a>
-                    </nav>
+                <!-- Голубая кнопка Позвонить -->
+                <a href="tel:{{ settings.phone }}" class="phone-btn-blue">
+                    <i class="fas fa-phone mr-2"></i>Позвонить
+                </a>
+            </div>
 
-                    <!-- Кнопка телефона -->
-                    {% if settings %}
-                    <a href="tel:{{ settings.phone }}" class="header-phone-btn">
-                        Позвонить
-                    </a>
-                    {% endif %}
-                </div>
+            <!-- НИЖНЯЯ строка: 6 кнопок навигации -->
+            <div class="flex justify-center space-x-4 py-2">
+                <a href="#about" class="nav-btn">О нас</a>
+                <a href="#location-card" class="nav-btn">Как нас найти</a>
+                <a href="#services" class="nav-btn">Услуги</a>
+                <a href="#reviews" class="nav-btn">Отзывы</a>
+                <a href="#research" class="nav-btn">Об исследовании</a>
+                <a href="#contacts" class="nav-btn">Контакты</a>
             </div>
         </div>
     </header>
