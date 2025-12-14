@@ -1,102 +1,78 @@
+// static/js/components/mobile-menu.js
 document.addEventListener('DOMContentLoaded', function() {
     const burgerBtn = document.getElementById('burgerBtn');
-    const closeBtn = document.getElementById('closeMenu');
+    const closeMenu = document.getElementById('closeMenu');
     const mobileMenu = document.getElementById('mobileMenu');
 
-    // Проверяем что элементы существуют
-    if (!burgerBtn || !closeBtn || !mobileMenu) {
-        console.log('Мобильное меню: элементы не найдены');
-        return;
-    }
+    if (!burgerBtn || !mobileMenu) return;
 
-    console.log('Мобильное меню: инициализация');
+    // Открыть меню
+    burgerBtn.addEventListener('click', openMobileMenu);
 
-    // Функция открытия меню
-    function openMenu() {
-        console.log('Открываем меню');
+    // Закрыть меню
+    closeMenu.addEventListener('click', closeMobileMenu);
+
+    // Закрыть при клике на ссылку
+    const mobileLinks = mobileMenu.querySelectorAll('a');
+    mobileLinks.forEach(link => {
+        link.addEventListener('click', closeMobileMenu);
+    });
+
+    // Закрыть при клике вне меню
+    mobileMenu.addEventListener('click', function(e) {
+        if (e.target === mobileMenu) {
+            closeMobileMenu();
+        }
+    });
+
+    // Закрыть при нажатии ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && !mobileMenu.classList.contains('hidden')) {
+            closeMobileMenu();
+        }
+    });
+
+    // Функции
+    function openMobileMenu() {
         mobileMenu.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
         document.documentElement.style.overflow = 'hidden';
 
-        // Фокус на кнопке закрытия для доступности
-        setTimeout(() => closeBtn.focus(), 100);
+        // Анимация появления
+        setTimeout(() => {
+            mobileMenu.style.opacity = '1';
+            mobileMenu.style.transform = 'translateY(0)';
+        }, 10);
     }
 
-    // Функция закрытия меню
-    function closeMenu() {
-        console.log('Закрываем меню');
+    function closeMobileMenu() {
         mobileMenu.classList.add('hidden');
         document.body.style.overflow = '';
         document.documentElement.style.overflow = '';
-
-        // Возвращаем фокус на бургер
-        burgerBtn.focus();
     }
 
-    // Открытие по клику на бургер
-    burgerBtn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        openMenu();
-    });
-
-    // Закрытие по клику на крестик
-    closeBtn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        closeMenu();
-    });
-
-    // Закрытие по клику на ссылку в меню
-    const menuLinks = mobileMenu.querySelectorAll('a');
-    menuLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            closeMenu();
-        });
-    });
-
-    // Закрытие по клику вне меню
-    mobileMenu.addEventListener('click', function(e) {
-        if (e.target === mobileMenu) {
-            closeMenu();
-        }
-    });
-
-    // Закрытие по ESC
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && !mobileMenu.classList.contains('hidden')) {
-            closeMenu();
-        }
-    });
-
-    // Плавная прокрутка для всех якорных ссылок
+    // Плавная прокрутка для всех навигационных ссылок
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-            if (href === '#') return;
+            const targetId = this.getAttribute('href');
+            if (targetId === '#' || targetId.startsWith('#')) {
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    e.preventDefault();
+                    const headerHeight = document.querySelector('.header-fixed')?.offsetHeight || 0;
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
 
-            const target = document.querySelector(href);
-            if (target) {
-                e.preventDefault();
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
 
-                // Закрываем меню если открыто
-                if (!mobileMenu.classList.contains('hidden')) {
-                    closeMenu();
+                    // Закрыть мобильное меню если открыто
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        closeMobileMenu();
+                    }
                 }
-
-                // Прокрутка с учетом высоты шапки
-                const header = document.querySelector('.header-fixed');
-                const headerHeight = header ? header.offsetHeight : 0;
-
-                const targetPosition = target.getBoundingClientRect().top +
-                                      window.pageYOffset -
-                                      headerHeight;
-
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
             }
         });
     });
-
-    console.log('Мобильное меню: инициализация завершена');
 });
