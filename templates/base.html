@@ -161,54 +161,53 @@
         </div>
 
         <!-- Мобильное меню (выпадающее) -->
-        <div class="mobile-menu hidden md:hidden fixed inset-0 bg-slate-900/95 backdrop-blur-lg z-50" id="mobileMenu">
+        <div class="mobile-menu hidden fixed inset-0 z-50" id="mobileMenu">
             <!-- Заголовок меню -->
-            <div class="flex justify-between items-center p-4 border-b border-slate-700/50">
-                <div class="text-2xl font-bold">
+            <div class="mobile-menu-header">
+                <div class="text-xl font-bold">
                     <span class="text-accent">ЦВСИ</span>
                     <span class="text-light"> - Центр выявления информации</span>
                 </div>
-                <button class="close-menu text-3xl text-light hover:text-accent transition-colors p-2"
-                        id="closeMenu" aria-label="Закрыть меню">
+                <button class="close-menu" id="closeMenu" aria-label="Закрыть меню">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
 
             <!-- Навигационные ссылки -->
-            <nav class="p-6 space-y-3">
+            <nav class="mobile-menu-nav">
                 <a href="#about" class="mobile-nav-btn">
-                    <i class="fas fa-info-circle mr-3 text-accent"></i>
+                    <i class="fas fa-info-circle mr-3"></i>
                     <span>О нас</span>
                 </a>
 
                 <a href="#location-card" class="mobile-nav-btn">
-                    <i class="fas fa-map-marker-alt mr-3 text-accent"></i>
+                    <i class="fas fa-map-marker-alt mr-3"></i>
                     <span>Как нас найти</span>
                 </a>
 
                 <a href="#services" class="mobile-nav-btn">
-                    <i class="fas fa-clipboard-list mr-3 text-accent"></i>
+                    <i class="fas fa-clipboard-list mr-3"></i>
                     <span>Услуги</span>
                 </a>
 
                 <a href="#reviews" class="mobile-nav-btn">
-                    <i class="fas fa-star mr-3 text-accent"></i>
+                    <i class="fas fa-star mr-3"></i>
                     <span>Отзывы</span>
                 </a>
 
                 <a href="#research" class="mobile-nav-btn">
-                    <i class="fas fa-microscope mr-3 text-accent"></i>
+                    <i class="fas fa-microscope mr-3"></i>
                     <span>Об исследовании</span>
                 </a>
 
                 <a href="#contacts" class="mobile-nav-btn">
-                    <i class="fas fa-address-book mr-3 text-accent"></i>
+                    <i class="fas fa-address-book mr-3"></i>
                     <span>Контакты</span>
                 </a>
             </nav>
 
             <!-- Кнопка позвонить в меню -->
-            <div class="absolute bottom-0 left-0 right-0 p-6">
+            <div class="mobile-menu-footer">
                 <a href="tel:{{ settings.phone }}" class="mobile-phone-btn">
                     <i class="fas fa-phone mr-3"></i>
                     <span>Позвонить сейчас</span>
