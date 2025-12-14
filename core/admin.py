@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import SiteSettings, SiteStatistics, PrivacyPolicy, ResearchInfo
+from .models import SiteSettings, PrivacyPolicy, ResearchInfo
 
 
 @admin.register(SiteSettings)
