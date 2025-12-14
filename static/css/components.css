@@ -264,131 +264,42 @@
 }
 
 /* ===================== */
-/* НОВАЯ ШАПКА - ВАРИАНТ 3 */
+/* КНОПКИ ШАПКИ */
 /* ===================== */
 
-/* Шапка */
-.header {
-    background: rgba(15, 23, 42, 0.98);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(100, 116, 139, 0.2);
-    height: 84px;
-    display: flex;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-}
-
-/* Кнопки навигации в шапке */
-.header-nav-btn {
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    min-width: 85px;
-    text-align: center;
-    background: transparent;
-    border: 1px solid transparent;
-    border-radius: 0.375rem;
-    color: #cbd5e0;
-    font-weight: 500;
-    font-size: 0.875rem;
-    text-decoration: none;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-}
-
-.header-nav-btn:hover {
-    background: rgba(99, 179, 237, 0.1);
-    color: #63b3ed;
-    border-color: rgba(99, 179, 237, 0.3);
-}
-
-.header-nav-btn.active {
-    background: rgba(99, 179, 237, 0.15);
-    color: #63b3ed;
-    border-color: #63b3ed;
-}
-
-/* Кнопка телефона в шапке */
-.header-phone-btn {
-    display: inline-block;
-    padding: 0.6rem 1.5rem;
-    background: linear-gradient(135deg, #2b6cb0 0%, #4299e1 100%);
-    border: none;
-    border-radius: 0.5rem;
+/* ГОЛУБАЯ КНОПКА ПОЗВОНИТЬ */
+.phone-btn-blue {
+    background-color: #2b6cb0;
     color: white;
+    padding: 10px 24px;
+    border-radius: 6px;
     font-weight: 600;
-    font-size: 0.9rem;
     text-decoration: none;
-    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    border: none;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    white-space: nowrap;
+    transition: all 0.3s ease;
 }
 
-.header-phone-btn:hover {
-    background: linear-gradient(135deg, #3182ce 0%, #63b3ed 100%);
+.phone-btn-blue:hover {
+    background-color: #2c5282;
     transform: translateY(-2px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Адаптивность шапки */
-@media (max-width: 1024px) {
-    .header-nav-btn {
-        min-width: 80px;
-        padding: 0.5rem 0.8rem;
-        font-size: 0.85rem;
-    }
-
-    .header-phone-btn {
-        padding: 0.5rem 1.2rem;
-        font-size: 0.85rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .header {
-        height: 60px;
-    }
-
-    .header-phone-btn {
-        padding: 0.4rem 1rem;
-        font-size: 0.8rem;
-    }
-}
-
-.phone-btn-blue {
-    background-color: #2b6cb0 !important; /* !important чтобы перебить другие стили */
-    color: white !important;
-    padding: 10px 24px !important;
-    border-radius: 6px !important;
-    font-weight: 600 !important;
-    text-decoration: none !important;
-    transition: all 0.3s ease !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
-    border: none !important;
-}
-
-.phone-btn-blue:hover {
-    background-color: #2c5282 !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15) !important;
-}
-
+/* КНОПКИ НАВИГАЦИИ */
 .nav-btn {
     color: #cbd5e0;
     font-weight: 500;
     text-decoration: none;
     padding: 8px 16px;
-    transition: all 0.3s ease;
     position: relative;
-    display: inline-block; /* Важно! */
+    display: inline-block;
     white-space: nowrap;
+    transition: color 0.3s ease;
 }
 
-/* Рамка при наведении - ТЕПЕРЬ РАБОТАЕТ */
 .nav-btn:hover {
     color: #63b3ed;
 }
@@ -402,8 +313,8 @@
     bottom: 0;
     border: 2px solid #63b3ed;
     border-radius: 20px;
+    pointer-events: none;
     animation: btnBorder 0.3s ease;
-    pointer-events: none; /* Чтобы не мешало клику */
 }
 
 @keyframes btnBorder {
@@ -414,5 +325,30 @@
     to {
         transform: scale(1);
         opacity: 1;
+    }
+}
+
+/* Адаптивность для кнопок шапки */
+@media (max-width: 1024px) {
+    .phone-btn-blue {
+        padding: 8px 20px;
+        font-size: 0.95rem;
+    }
+
+    .nav-btn {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .phone-btn-blue {
+        padding: 6px 16px;
+        font-size: 0.9rem;
+    }
+
+    .nav-btn {
+        padding: 4px 10px;
+        font-size: 0.85rem;
     }
 }
