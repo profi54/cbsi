@@ -347,6 +347,57 @@
         </div>
     </section>
 
+    <!-- Блок "Об исследованиях" (3 колонки) -->
+    {% if research_info %}
+    <section id="research" class="py-12 md:py-20 bg-dark-secondary">
+        <div class="container mx-auto px-4">
+            <div class="content-overlay-enhanced p-6 sm:p-8 md:p-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-light mb-8 md:mb-12 text-center">
+                    {{ research_info.title }}
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                    <!-- Колонка 1 -->
+                    {% if research_info.column_1 %}
+                    <div class="research-column bg-dark rounded-xl p-6 fade-in">
+                        <div class="text-light-secondary text-lg leading-relaxed">
+                            {{ research_info.column_1|safe }}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Колонка 2 -->
+                    {% if research_info.column_2 %}
+                    <div class="research-column bg-dark rounded-xl p-6 fade-in">
+                        <div class="text-light-secondary text-lg leading-relaxed">
+                            {{ research_info.column_2|safe }}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Колонка 3 -->
+                    {% if research_info.column_3 %}
+                    <div class="research-column bg-dark rounded-xl p-6 fade-in">
+                        <div class="text-light-secondary text-lg leading-relaxed">
+                            {{ research_info.column_3|safe }}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Кнопка-призыв к действию -->
+                <div class="text-center mt-10 pt-8 border-t border-gray-700">
+                    <button onclick="scrollToSection('contacts')"
+                            class="btn btn-primary py-3 px-8 text-lg transform hover:scale-105 transition-transform"
+                            aria-label="Заказать полиграфологическое исследование">
+                        Заказать исследование
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
     <!-- Контакты -->
     <section id="contacts" class="py-12 md:py-20" aria-labelledby="contacts-heading">
         <div class="container mx-auto px-4">
