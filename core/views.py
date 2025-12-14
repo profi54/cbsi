@@ -2,6 +2,7 @@ from django.shortcuts import render
 from services.models import Service
 from reviews.models import Review
 from core.models import SiteSettings, PrivacyPolicy, ResearchInfo
+import time
 
 def home(request):
     context = {
@@ -9,6 +10,7 @@ def home(request):
         'reviews': Review.objects.filter(is_published=True).order_by('-created_at')[:6],
         'settings': SiteSettings.objects.first(),
         'research_info': ResearchInfo.objects.filter(is_active=True).first(),
+        'CACHE_VERSION': int(time.time()),
     }
     return render(request, 'core/home.html', context)
 
