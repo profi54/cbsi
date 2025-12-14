@@ -1,83 +1,69 @@
-// navigation.js - плавная навигация и подсветка активных ссылок
-
 document.addEventListener('DOMContentLoaded', function() {
-    // 1. Плавный скролл для навигационных ссылок
-    const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
+    // 1. Плавный скролл для всех ссылок с хэшем
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
 
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
+            // Пропускаем пустые ссылки
+            if (href === '#' || href === '') return;
 
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
-
-            const targetElement = document.querySelector(targetId);
+            // Находим целевой элемент
+            const targetElement = document.querySelector(href);
             if (!targetElement) {
-                console.warn(`Элемент ${targetId} не найден на странице`);
+                console.warn(`Элемент ${href} не найден`);
                 return;
             }
 
-            // Плавный скролл
-            const headerOffset = 80; // Высота фиксированного хедера
-            const elementPosition = targetElement.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+            // Предотвращаем стандартное поведение
+            e.preventDefault();
 
+            // Рассчитываем позицию с учетом фиксированного хедера
+            const headerHeight = 80; // Высота вашего фиксированного хедера
+            const elementPosition = targetElement.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
+
+            // Плавный скролл
             window.scrollTo({
                 top: offsetPosition,
                 behavior: 'smooth'
             });
 
-            // Обновляем URL без перезагрузки
-            history.pushState(null, null, targetId);
+            // Обновляем URL в адресной строке
+            if (history.pushState) {
+                history.pushState(null, null, href);
+            } else {
+                location.hash = href;
+            }
         });
     });
 
-    // 2. Подсветка активной секции при скролле
-    function highlightActiveSection() {
-        const sections = document.querySelectorAll('section[id]');
+    // 2. Подсветка активной секции (опционально)
+    function highlightActiveNav() {
+        const sections = document.querySelectorAll('section[id], div[id]');
         const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
 
-        let currentSectionId = '';
-        const scrollPosition = window.scrollY + 100; // Небольшой отступ
+        let current = '';
+        const scrollPos = window.scrollY + 100;
 
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
             const sectionHeight = section.clientHeight;
+            const sectionId = section.getAttribute('id');
 
-            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                currentSectionId = `#${section.id}`;
+            if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                current = `#${sectionId}`;
             }
         });
 
-        // Обновляем активные ссылки
         navLinks.forEach(link => {
             link.classList.remove('active');
-            if (link.getAttribute('href') === currentSectionId) {
+            if (link.getAttribute('href') === current) {
                 link.classList.add('active');
             }
         });
     }
 
-    // Запускаем при загрузке и скролле
-    highlightActiveSection();
-    window.addEventListener('scroll', highlightActiveSection);
-
-    // 3. Проверка существования секций
-    function checkSections() {
-        const sections = ['about', 'location', 'services', 'reviews', 'research', 'contacts'];
-        const missingSections = [];
-
-        sections.forEach(sectionId => {
-            const element = document.getElementById(sectionId);
-            if (!element) {
-                missingSections.push(sectionId);
-            }
-        });
-
-        if (missingSections.length > 0) {
-            console.warn('Следующие секции не найдены на странице:', missingSections);
-        }
-    }
-
-    checkSections();
+    // Запускаем подсветку
+    window.addEventListener('scroll', highlightActiveNav);
+    highlightActiveNav(); // Инициализация при загрузке
 });
