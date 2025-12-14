@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from services.models import Service
 from reviews.models import Review
-from core.models import SiteSettings, SiteStatistics, PrivacyPolicy
+from core.models import SiteSettings, PrivacyPolicy, ResearchInfo
 
 def home(request):
     context = {
