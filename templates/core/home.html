@@ -132,7 +132,7 @@
                                 </a>
                                 <div class="mt-4 text-center">
                                     <p class="text-light-secondary">
-                                        Наш офис находится в центре города, к нам легко добраться.
+                                        Наш офис находится на правом берегу, к нам легко добраться.
                                         <span class="block mt-1 text-accent font-semibold">
                                             Кликните на карту для просмотра в 2ГИС →
                                         </span>
@@ -141,14 +141,7 @@
                             </div>
                         </div>
 
-                        <!-- Описание -->
-                        <div class="text-center">
-                            <p class="text-lg text-light-secondary">
-                                Наш центр оборудован всем необходимым для проведения качественных полиграфологических исследований.
-                                Уютный кабинет обеспечивает комфортную и конфиденциальную атмосферу для клиентов,
-                                а удобное расположение в центре города делает визит максимально удобным.
-                            </p>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -200,7 +193,7 @@
                         <h3 class="text-xl font-bold text-light mb-3" itemprop="name">{{ service.title }}</h3>
                         <p class="text-light-secondary mb-4" itemprop="description">{{ service.description }}</p>
 
-                        <!-- Цена с отступом снизу -->
+                        <!-- Цена  -->
                         <div class="mb-2">
                             <div itemprop="offers" itemscope itemtype="https://schema.org/Offer" style="display: none;">
                                 <meta itemprop="price" content="{{ service.price }}">
@@ -214,7 +207,7 @@
                             {% endif %}
                         </div>
 
-                        <!-- Продолжительность с отступом сверху -->
+                        <!-- Продолжительность  -->
                         <div class="mt-2 mb-4">
                             <span class="text-light-secondary text-sm">{{ service.duration }}</span>
                         </div>
@@ -435,7 +428,7 @@
                                 {% endif %}
                             </div>
 
-                            <!-- Кнопка для модалки -->
+                            <!-- Кнопка формы обратной связи -->
                             <div class="bg-dark-secondary rounded-xl p-6">
                                 <h3 class="text-2xl font-bold text-light mb-6">Быстрая заявка</h3>
                                 <div class="text-center">
@@ -443,7 +436,7 @@
                                         <i class="fas fa-headset"></i>
                                     </div>
                                     <p class="text-light-secondary mb-6">
-                                        Оставьте заявку и наш специалист свяжется с вами в течение 30 минут
+                                        Оставьте заявку и наш специалист свяжется с Вами
                                     </p>
                                     <button onclick="openModal(null, null, event)"
                                             class="w-full btn btn-primary py-4 text-lg font-semibold transform hover:scale-105 transition-transform"
