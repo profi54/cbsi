@@ -109,13 +109,13 @@
     }
     </style>
 
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
-    <link rel="stylesheet" href="{% static 'css/layout.css' %}">
-    <link rel="stylesheet" href="{% static 'css/components.css' %}">
-    <link rel="stylesheet" href="{% static 'css/animations.css' %}">
-    <link rel="stylesheet" href="{% static 'css/typography.css' %}">
-    <link rel="stylesheet" href="{% static 'css/backgrounds.css' %}">
-    <link rel="stylesheet" href="{% static 'css/equipment.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}?v={{ STATIC_VERSION }}">
+    <link rel="stylesheet" href="{% static 'css/layout.css' %}?v={{ STATIC_VERSION }}">
+    <link rel="stylesheet" href="{% static 'css/components.css' %}?v={{ STATIC_VERSION }}">
+    <link rel="stylesheet" href="{% static 'css/animations.css' %}?v={{ STATIC_VERSION }}">
+    <link rel="stylesheet" href="{% static 'css/typography.css' %}?v={{ STATIC_VERSION }}">
+    <link rel="stylesheet" href="{% static 'css/backgrounds.css' %}?v={{ STATIC_VERSION }}">
+    <link rel="stylesheet" href="{% static 'css/equipment.css' %}?v={{ STATIC_VERSION }}">
 
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
@@ -159,13 +159,13 @@
 
     {% include 'includes/footer.html' %}
 
-    <script src="{% static 'js/main.js' %}"></script>
-    <script src="{% static 'js/components/forms.js' %}"></script>
-    <script src="{% static 'js/components/equipment.js' %}"></script>
-    <script src="{% static 'js/app.js' %}"></script>
+    <script src="{% static 'js/main.js' %}?v={{ STATIC_VERSION }}"></script>
+    <script src="{% static 'js/components/forms.js' %}?v={{ STATIC_VERSION }}"></script>
+    <script src="{% static 'js/components/equipment.js' %}?v={{ STATIC_VERSION }}"></script>
+    <script src="{% static 'js/app.js' %}?v={{ STATIC_VERSION }}"></script>
 
     <!-- Навигационный скрипт -->
-    <script src="{% static 'js/components/navigation.js' %}"></script>
+    <script src="{% static 'js/components/navigation.js' %}?v={{ STATIC_VERSION }}"></script>
 
     {% block extra_js %}
     {% endblock %}
