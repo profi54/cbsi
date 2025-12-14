@@ -47,10 +47,10 @@
     margin: 0 auto;
 }
 
-/* Для десктопа - не больше 400px в ширину */
+/* Для десктопа - не больше 300px в ширину */
 @media (min-width: 769px) {
     .equipment-img {
-        max-width: 400px;
+        max-width: 300px;
         max-height: 400px;
     }
 }
@@ -58,7 +58,7 @@
 /* Для мобильных - не больше 2500px */
 @media (max-width: 768px) {
     .equipment-img {
-        max-width: 250px;
-        max-height: 250px;
+        max-width: 180px;
+        max-height: 240px;
     }
 }
