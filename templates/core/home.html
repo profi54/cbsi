@@ -397,78 +397,63 @@
                 <h2 id="contacts-heading" class="text-3xl sm:text-4xl font-bold text-light mb-4 text-center">Контакты</h2>
                 <p class="text-xl text-light-secondary text-center mb-8 sm:mb-12">Свяжитесь с нами для консультации</p>
 
-                {% if messages %}
-                <div class="max-w-2xl mx-auto mb-8">
-                    {% for message in messages %}
-                    <div class="bg-green-600 text-white p-4 rounded-lg mb-4 fade-in border border-green-500" role="alert">
-                        {{ message }}
-                    </div>
-                    {% endfor %}
-                </div>
-                {% endif %}
+                <div class="max-w-4xl mx-auto">
+                    <!-- Контактная информация -->
+                    <div class="fade-in mb-12">
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <!-- Контакты из админки -->
+                            <div>
+                                <h3 class="text-2xl font-bold text-light mb-6">Контактная информация</h3>
 
-                <div class="grid md:grid-cols-2 gap-8 sm:gap-12 max-w-4xl mx-auto">
-                    <div class="fade-in">
-                        <h3 class="text-2xl font-bold text-light mb-6">Контактная информация</h3>
+                                {% if settings %}
+                                <div class="space-y-4">
+                                    <div class="flex items-center" itemprop="telephone">
+                                        <i class="fas fa-phone text-accent mr-4 text-lg" aria-hidden="true"></i>
+                                        <a href="tel:{{ settings.phone }}" class="text-lg text-light-secondary hover:text-accent transition">{{ settings.phone }}</a>
+                                    </div>
+                                    <div class="flex items-center" itemprop="email">
+                                        <i class="fas fa-envelope text-accent mr-4 text-lg" aria-hidden="true"></i>
+                                        <a href="mailto:{{ settings.email }}" class="text-lg text-light-secondary hover:text-accent transition">{{ settings.email }}</a>
+                                    </div>
+                                    {% if settings.address %}
+                                    <div class="flex items-center" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+                                        <i class="fas fa-map-marker-alt text-accent mr-4 text-lg" aria-hidden="true"></i>
+                                        <a href="https://go.2gis.com/rXc24" target="_blank" rel="noopener noreferrer"
+                                           class="text-lg text-light-secondary hover:text-accent transition cursor-pointer"
+                                           title="Открыть карту 2ГИС">
+                                            {{ settings.address }}
+                                        </a>
+                                    </div>
+                                    {% endif %}
+                                    {% if settings.working_hours %}
+                                    <div class="flex items-center" itemprop="openingHours">
+                                        <i class="fas fa-clock text-accent mr-4 text-lg" aria-hidden="true"></i>
+                                        <span class="text-lg text-light-secondary">{{ settings.working_hours }}</span>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                {% endif %}
+                            </div>
 
-                        {% if settings %}
-                        <div class="space-y-4">
-                            <div class="flex items-center" itemprop="telephone">
-                                <i class="fas fa-phone text-accent mr-4 text-lg" aria-hidden="true"></i>
-                                <a href="tel:{{ settings.phone }}" class="text-lg text-light-secondary hover:text-accent transition">{{ settings.phone }}</a>
+                            <!-- Кнопка для модалки -->
+                            <div class="bg-dark-secondary rounded-xl p-6">
+                                <h3 class="text-2xl font-bold text-light mb-6">Быстрая заявка</h3>
+                                <div class="text-center">
+                                    <div class="text-accent text-5xl mb-4">
+                                        <i class="fas fa-headset"></i>
+                                    </div>
+                                    <p class="text-light-secondary mb-6">
+                                        Оставьте заявку и наш специалист свяжется с вами в течение 30 минут
+                                    </p>
+                                    <button onclick="openModal()"
+                                            class="w-full btn btn-primary py-4 text-lg font-semibold transform hover:scale-105 transition-transform"
+                                            aria-label="Оставить заявку на консультацию">
+                                        <i class="fas fa-paper-plane mr-2"></i>
+                                        Оставить заявку
+                                    </button>
+                                </div>
                             </div>
-                            <div class="flex items-center" itemprop="email">
-                                <i class="fas fa-envelope text-accent mr-4 text-lg" aria-hidden="true"></i>
-                                <a href="mailto:{{ settings.email }}" class="text-lg text-light-secondary hover:text-accent transition">{{ settings.email }}</a>
-                            </div>
-                            {% if settings.address %}
-                            <div class="flex items-center" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
-                                <i class="fas fa-map-marker-alt text-accent mr-4 text-lg" aria-hidden="true"></i>
-                                <span class="text-lg text-light-secondary" itemprop="streetAddress">{{ settings.address }}</span>
-                            </div>
-                            {% endif %}
-                            {% if settings.working_hours %}
-                            <div class="flex items-center" itemprop="openingHours">
-                                <i class="fas fa-clock text-accent mr-4 text-lg" aria-hidden="true"></i>
-                                <span class="text-lg text-light-secondary">{{ settings.working_hours }}</span>
-                            </div>
-                            {% endif %}
                         </div>
-                        {% endif %}
-                    </div>
-
-                    <div class="fade-in">
-                        <h3 class="text-2xl font-bold text-light mb-6">Заказать обратный звонок</h3>
-
-                        <div id="form-messages" class="mb-4" aria-live="polite"></div>
-
-                        <form id="callback-form" class="space-y-4" action="/contacts/callback/" method="POST" itemprop="potentialAction" itemscope itemtype="https://schema.org/CommunicateAction">
-                            {% csrf_token %}
-                            <div>
-                                <label for="name-field" class="sr-only">Ваше имя</label>
-                                <input type="text" name="name" required
-                                       class="w-full px-4 py-3 rounded-lg placeholder-gray-400"
-                                       placeholder="Ваше имя"
-                                       id="name-field"
-                                       aria-required="true"
-                                       style="background: rgba(30, 41, 59, 0.95); border: 1px solid rgba(100, 116, 139, 0.5); color: #f1f5f9; caret-color: #63b3ed;">
-                            </div>
-                            <div>
-                                <label for="phone-field" class="sr-only">Ваш телефон</label>
-                                <input type="tel" name="phone" required
-                                       class="w-full px-4 py-3 rounded-lg placeholder-gray-400"
-                                       placeholder="Ваш телефон"
-                                       id="phone-field"
-                                       aria-required="true"
-                                       style="background: rgba(30, 41, 59, 0.95); border: 1px solid rgba(100, 116, 139, 0.5); color: #f1f5f9; caret-color: #63b3ed;">
-                            </div>
-                            <button type="button" onclick="openModal()"
-                                    class="w-full btn btn-primary py-3 text-lg"
-                                    id="submit-btn"
-                                    aria-label="Отправить заявку на обратный звонок">
-                                Заказать звонок
-                            </button>
-                        </form>
                     </div>
                 </div>
             </div>

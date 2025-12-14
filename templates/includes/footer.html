@@ -1,41 +1,56 @@
-
 <footer class="footer">
     <div class="container">
-        <div class="grid md:grid-cols-3 gap-8">
-            <div>
-                <h3 class="text-xl font-bold text-accent mb-4">ЦВСИ</h3>
-                <p class="text-light-secondary">Сибирский центр выявления скрываемой информации</p>
+        <div class="text-center">
+            <!-- Название и описание -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-accent mb-3">ЦВСИ</h3>
+                <p class="text-light-secondary max-w-2xl mx-auto">
+                    Сибирский центр выявления скрываемой информации.<br>
+                    Профессиональные полиграфологические исследования в Новосибирске и по всей Сибири.
+                </p>
             </div>
-            <div>
-                <h4 class="font-bold text-light mb-4">Контакты</h4>
-                {% if settings %}
-                <p class="text-light-secondary"><i class="fas fa-phone mr-2"></i>{{ settings.phone }}</p>
-                <p class="text-light-secondary"><i class="fas fa-envelope mr-2"></i>{{ settings.email }}</p>
-                {% if settings.address %}
-                <p class="text-light-secondary"><i class="fas fa-map-marker-alt mr-2"></i>{{ settings.address }}</p>
-                {% endif %}
-                {% endif %}
-            </div>
-            <div>
+
+            <!-- Соцсети -->
+            <div class="mb-8">
                 <h4 class="font-bold text-light mb-4">Мы в соцсетях</h4>
-                <div class="flex space-x-4">
+                <div class="flex justify-center space-x-6">
                     {% if settings and settings.vk_link %}
-                    <a href="{{ settings.vk_link }}" class="text-light-secondary hover:text-accent"><i class="fab fa-vk text-2xl"></i></a>
+                    <a href="{{ settings.vk_link }}"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="text-light-secondary hover:text-accent transition text-2xl"
+                       title="Мы ВКонтакте">
+                        <i class="fab fa-vk"></i>
+                    </a>
                     {% endif %}
                     {% if settings and settings.telegram_link %}
-                    <a href="{{ settings.telegram_link }}" class="text-light-secondary hover:text-accent"><i class="fab fa-telegram text-2xl"></i></a>
+                    <a href="{{ settings.telegram_link }}"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="text-light-secondary hover:text-accent transition text-2xl"
+                       title="Наш Telegram">
+                        <i class="fab fa-telegram"></i>
+                    </a>
                     {% endif %}
                 </div>
+            </div>
+
+            <!-- Кнопка наверх -->
+            <div class="mb-8">
+                <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+                        class="btn btn-outline text-sm py-2 px-6"
+                        aria-label="Вернуться наверх">
+                    <i class="fas fa-arrow-up mr-2"></i>Наверх
+                </button>
             </div>
         </div>
     </div>
 </footer>
 
-
 <footer class="footer-documents pt-6 pb-8 border-t border-gray-700">
     <div class="container">
         <div class="max-w-md mx-auto text-center">
-            <!-- Только жирная ссылка на политику -->
+            <!-- Политика конфиденциальности -->
             <p class="mb-4">
                 <a href="/privacy-policy/" class="font-bold text-light hover:text-accent transition text-lg">
                     Политика конфиденциальности
