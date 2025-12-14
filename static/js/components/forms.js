@@ -64,12 +64,21 @@ function focusOnCallbackForm(serviceId = null) {
 let currentServiceId = null;
 
 // Открытие модального окна
-function openModal(serviceId = null, serviceTitle = null) {
+function openModal(serviceId = null, serviceTitle = null, event = null) {
+    // Получаем event если он передан
+    const e = event || window.event;
+
+    // ВАЖНО: предотвращаем поведение по умолчанию (скролл и т.д.)
+    if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
     const modal = document.getElementById('callback-modal');
 
     if (!modal) {
         console.error('❌ Modal element not found!');
-        return;
+        return false;
     }
 
     // Устанавливаем ID услуги если есть
@@ -90,7 +99,7 @@ function openModal(serviceId = null, serviceTitle = null) {
     // Удаляем класс hidden (показываем модальное окно)
     modal.classList.remove('hidden');
 
-    // Блокируем скролл - только через класс, не через style
+    // Блокируем скролл
     document.body.classList.add('modal-open');
 
     // Фокусируемся на первом поле после небольшой задержки
@@ -100,13 +109,21 @@ function openModal(serviceId = null, serviceTitle = null) {
             nameInput.focus();
         }
     }, 50);
+
+    return false; // Дополнительная защита для обработчиков onclick
 }
 
 // Закрытие модального окна
-function closeModal() {
+function closeModal(event = null) {
+    // Если передано событие, предотвращаем поведение по умолчанию
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
     const modal = document.getElementById('callback-modal');
 
-    if (!modal) return;
+    if (!modal) return false;
 
     // Добавляем класс hidden (скрываем модальное окно)
     modal.classList.add('hidden');
@@ -125,6 +142,8 @@ function closeModal() {
     if (modalTitle) {
         modalTitle.textContent = 'Заявка на обратный звонок';
     }
+
+    return false;
 }
 
 // Маска для телефона в модальном окне
@@ -159,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (overlay) {
         overlay.addEventListener('click', function(e) {
             if (e.target === this) {
-                closeModal();
+                closeModal(e);
             }
         });
     }
@@ -169,7 +188,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (e.key === 'Escape') {
             const modal = document.getElementById('callback-modal');
             if (modal && !modal.classList.contains('hidden')) {
-                closeModal();
+                closeModal(e);
             }
         }
     });
@@ -182,9 +201,41 @@ document.addEventListener('DOMContentLoaded', function() {
     const modalForm = document.getElementById('callback-form-modal');
     if (modalForm) {
         modalForm.addEventListener('submit', function(e) {
-            setTimeout(closeModal, 1000);
+            // Не закрываем сразу, ждем отправки
+            setTimeout(() => {
+                closeModal();
+            }, 1000);
         });
     }
+
+    // Глобальный обработчик для кнопок без preventDefault
+    document.addEventListener('click', function(e) {
+        const button = e.target.closest('button');
+        if (button) {
+            const onclick = button.getAttribute('onclick');
+            if (onclick && onclick.includes('openModal(') && !onclick.includes('event')) {
+                // Нашли кнопку без передачи event
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Извлекаем параметры
+                const match = onclick.match(/openModal\(([^)]+)\)/);
+                if (match) {
+                    const params = match[1];
+                    // Парсим параметры
+                    if (params.includes("'")) {
+                        const serviceMatch = params.match(/(\d+),\s*'([^']+)'/);
+                        if (serviceMatch) {
+                            openModal(serviceMatch[1], serviceMatch[2], e);
+                        }
+                    } else if (params.trim() === '') {
+                        openModal(null, null, e);
+                    }
+                }
+                return false;
+            }
+        }
+    }, true);
 
     // Экстренный патч: проверяем и исправляем стили модального окна
     setTimeout(function() {
@@ -193,8 +244,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Убедимся, что начальные стили правильные
             const computedStyle = window.getComputedStyle(modal);
 
-            // Если display: none, исправляем
-            if (computedStyle.display === 'none') {
+            // Если display: none, исправляем (но сохраняем hidden класс)
+            if (computedStyle.display === 'none' && !modal.classList.contains('hidden')) {
                 modal.style.display = 'flex';
             }
 
@@ -202,8 +253,6 @@ document.addEventListener('DOMContentLoaded', function() {
             if (computedStyle.visibility === 'hidden' && !modal.classList.contains('hidden')) {
                 modal.style.visibility = 'visible';
             }
-
-            console.log('✅ Modal initialized correctly');
         }
     }, 500);
 });
@@ -213,3 +262,24 @@ window.openModal = openModal;
 window.closeModal = closeModal;
 window.scrollToSection = scrollToSection;
 window.focusOnCallbackForm = focusOnCallbackForm;
+
+// Глобальный обработчик для старых кнопок без event параметра
+(function() {
+    // Перехватываем старые обработчики
+    const originalAddEventListener = EventTarget.prototype.addEventListener;
+    EventTarget.prototype.addEventListener = function(type, listener, options) {
+        if (type === 'click' && listener && listener.toString().includes('openModal')) {
+            const wrappedListener = function(e) {
+                if (listener.length === 0) {
+                    // Если функция не принимает параметры
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return listener.call(this);
+                }
+                return listener.call(this, e);
+            };
+            return originalAddEventListener.call(this, type, wrappedListener, options);
+        }
+        return originalAddEventListener.call(this, type, listener, options);
+    };
+})();
