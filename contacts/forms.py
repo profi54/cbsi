@@ -1,18 +1,22 @@
 from django import forms
 from .models import CallbackRequest
 
-
 class CallbackForm(forms.ModelForm):
-    service_id = forms.IntegerField(required=False, widget=forms.HiddenInput())
-
     class Meta:
         model = CallbackRequest
-        fields = ['name', 'phone', 'service']
+        fields = ['name', 'phone', 'message', 'consent', 'service']
         widgets = {
-            'service': forms.HiddenInput(),  # Скрытое поле для услуги
+            'service': forms.HiddenInput(),
+            'name': forms.TextInput(attrs={
+                'placeholder': 'Ваше имя',
+                'required': True
+            }),
+            'phone': forms.TextInput(attrs={
+                'placeholder': '+7 (___) ___-__-__',
+                'required': True
+            }),
+            'message': forms.Textarea(attrs={
+                'placeholder': 'Дополнительная информация...',
+                'rows': 4
+            }),
         }
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['name'].required = True
-        self.fields['phone'].required = True
