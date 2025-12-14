@@ -485,15 +485,15 @@
 
 {% block extra_js %}
 <!-- Модальное окно обратной связи -->
-<div id="callback-modal" class="modal hidden fixed inset-0 z-50 overflow-y-auto">
-    <div class="modal-overlay fixed inset-0 bg-black bg-opacity-50"></div>
+<div id="callback-modal" class="modal hidden">
+    <div class="modal-overlay"></div>
 
-    <div class="modal-container relative min-h-screen flex items-center justify-center p-4">
-        <div class="modal-content bg-dark rounded-xl shadow-2xl max-w-md w-full mx-auto">
+    <div class="modal-container">
+        <div class="modal-content">
             <!-- Заголовок -->
-            <div class="modal-header flex justify-between items-center p-6 border-b border-gray-700">
+            <div class="modal-header">
                 <h3 class="text-2xl font-bold text-light" id="modal-title">Заявка на обратный звонок</h3>
-                <button onclick="closeModal()" class="text-gray-400 hover:text-light text-2xl">
+                <button onclick="closeModal()" class="modal-close-btn" aria-label="Закрыть окно">
                     &times;
                 </button>
             </div>
@@ -508,7 +508,7 @@
                     <input type="text"
                            name="name"
                            required
-                           class="w-full px-4 py-3 rounded-lg bg-dark-secondary border border-gray-600 text-light placeholder-gray-400 focus:border-accent focus:outline-none"
+                           class="modal-form-input"
                            placeholder="Ваше имя">
                 </div>
 
@@ -517,7 +517,7 @@
                     <input type="tel"
                            name="phone"
                            required
-                           class="w-full px-4 py-3 rounded-lg bg-dark-secondary border border-gray-600 text-light placeholder-gray-400 focus:border-accent focus:outline-none"
+                           class="modal-form-input"
                            placeholder="+7 (___) ___-__-__"
                            id="modal-phone">
                 </div>
@@ -525,8 +525,7 @@
                 <div>
                     <label class="block text-light mb-2">Дополнительно</label>
                     <textarea name="message"
-                              rows="4"
-                              class="w-full px-4 py-3 rounded-lg bg-dark-secondary border border-gray-600 text-light placeholder-gray-400 focus:border-accent focus:outline-none"
+                              class="modal-form-textarea"
                               placeholder="Дополнительная информация..."></textarea>
                 </div>
 
@@ -535,7 +534,7 @@
                         <input type="checkbox"
                                name="consent"
                                required
-                               class="mt-1 rounded border-gray-600 text-accent focus:ring-accent">
+                               class="modal-checkbox">
                         <span class="text-sm text-light-secondary">
                             Я выражаю согласие на передачу и обработку персональных данных в соответствии с
                             <a href="{% url 'privacy_policy' %}" target="_blank" class="text-accent hover:underline">Политикой конфиденциальности</a>
@@ -553,64 +552,4 @@
         </div>
     </div>
 </div>
-
-<script>
-// Функции для модального окна
-let currentServiceId = null;
-
-function openModal(serviceId = null, serviceTitle = null) {
-    // Устанавливаем ID услуги если есть
-    if (serviceId) {
-        currentServiceId = serviceId;
-        document.getElementById('modal-service-id').value = serviceId;
-
-        // Меняем заголовок если есть название услуги
-        if (serviceTitle) {
-            document.getElementById('modal-title').textContent = `Заявка на услугу: ${serviceTitle}`;
-        }
-    }
-
-    document.getElementById('callback-modal').classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeModal() {
-    document.getElementById('callback-modal').classList.add('hidden');
-    document.body.style.overflow = 'auto';
-    currentServiceId = null;
-    document.getElementById('modal-service-id').value = '';
-    document.getElementById('modal-title').textContent = 'Заявка на обратный звонок';
-}
-
-// Закрытие при клике на overlay
-document.addEventListener('DOMContentLoaded', function() {
-    const overlay = document.querySelector('.modal-overlay');
-    if (overlay) {
-        overlay.addEventListener('click', closeModal);
-    }
-
-    // Маска для телефона
-    const phoneInput = document.getElementById('modal-phone');
-    if (phoneInput) {
-        phoneInput.addEventListener('input', function(e) {
-            let x = e.target.value.replace(/\D/g, '').match(/(\d{0,1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/);
-            e.target.value = !x[2] ? x[1] : '+7 (' + x[2] + (x[3] ? ') ' + x[3] : '') + (x[4] ? '-' + x[4] : '') + (x[5] ? '-' + x[5] : '');
-        });
-    }
-});
-
-// Закрытие на ESC
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeModal();
-});
-
-// Обработка отправки формы
-document.getElementById('callback-form-modal').addEventListener('submit', function(e) {
-    // Здесь форма будет отправлена обычным способом (не AJAX)
-    // После отправки закрываем модальное окно
-    setTimeout(function() {
-        closeModal();
-    }, 1000);
-});
-</script>
 {% endblock %}
