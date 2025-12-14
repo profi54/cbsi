@@ -10,4 +10,13 @@ def home(request):
         'settings': SiteSettings.objects.first(),
         'statistics': SiteStatistics.objects.first(),
     }
-    return render(request, 'core/home.html', context)  # Убедись, что есть return!
+    return render(request, 'core/home.html', context)
+
+def privacy_policy(request):  # Эта функция должна быть
+    policy = PrivacyPolicy.objects.first()
+    settings = SiteSettings.objects.first()
+    context = {
+        'policy': policy,
+        'settings': settings,
+    }
+    return render(request, 'core/privacy_policy.html', context)
