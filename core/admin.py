@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import SiteSettings, SiteStatistics
+from .models import SiteSettings, SiteStatistics, PrivacyPolicy
 
 
 @admin.register(SiteSettings)
@@ -18,3 +18,15 @@ class SiteStatisticsAdmin(admin.ModelAdmin):
 
     def has_add_permission(self, request):
         return not SiteStatistics.objects.exists()
+
+
+
+
+
+@admin.register(PrivacyPolicy)
+class PrivacyPolicyAdmin(admin.ModelAdmin):
+    list_display = ['title', 'is_published', 'updated_at']
+    list_editable = ['is_published']
+
+    def has_add_permission(self, request):
+        return not PrivacyPolicy.objects.exists()

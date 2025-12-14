@@ -29,3 +29,17 @@ class SiteStatistics(models.Model):
 
     def __str__(self):
         return "Статистика сайта"
+
+
+class PrivacyPolicy(models.Model):
+    title = models.CharField('Заголовок', max_length=200, default='Политика конфиденциальности')
+    content = models.TextField('Текст политики', blank=True)
+    is_published = models.BooleanField('Опубликовано', default=False)
+    updated_at = models.DateTimeField('Обновлено', auto_now=True)
+
+    class Meta:
+        verbose_name = 'Политика конфиденциальности'
+        verbose_name_plural = 'Политика конфиденциальности'
+
+    def __str__(self):
+        return self.title

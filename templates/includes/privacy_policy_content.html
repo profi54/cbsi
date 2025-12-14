@@ -1,0 +1,28 @@
+{% load static %}
+
+<section class="py-12 md:py-20">
+    <div class="container mx-auto px-4">
+        <div class="content-overlay-enhanced p-6 sm:p-8 md:p-12">
+            <h1 class="text-3xl sm:text-4xl font-bold text-light mb-8 text-center">
+                Политика конфиденциальности
+            </h1>
+
+            {% if policy and policy.is_published %}
+                <div class="text-light-secondary text-lg space-y-6">
+                    {{ policy.content|linebreaks }}
+                </div>
+            {% else %}
+                <div class="text-center text-light-secondary py-12">
+                    <p class="text-xl mb-4">Политика конфиденциальности находится в разработке.</p>
+                    <p>Скоро здесь появится полный текст документа.</p>
+                </div>
+            {% endif %}
+
+            <div class="mt-12 text-center">
+                <a href="/" class="btn btn-primary py-3 px-8">
+                    Вернуться на главную
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

@@ -125,37 +125,7 @@
         {% endblock %}
     </main>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="grid md:grid-cols-3 gap-8">
-                <div>
-                    <h3 class="text-xl font-bold text-accent mb-4">ЦВСИ</h3>
-                    <p class="text-light-secondary">Сибирский центр выявления скрываемой информации</p>
-                </div>
-                <div>
-                    <h4 class="font-bold text-light mb-4">Контакты</h4>
-                    {% if settings %}
-                    <p class="text-light-secondary"><i class="fas fa-phone mr-2"></i>{{ settings.phone }}</p>
-                    <p class="text-light-secondary"><i class="fas fa-envelope mr-2"></i>{{ settings.email }}</p>
-                    {% if settings.address %}
-                    <p class="text-light-secondary"><i class="fas fa-map-marker-alt mr-2"></i>{{ settings.address }}</p>
-                    {% endif %}
-                    {% endif %}
-                </div>
-                <div>
-                    <h4 class="font-bold text-light mb-4">Мы в соцсетях</h4>
-                    <div class="flex space-x-4">
-                        {% if settings and settings.vk_link %}
-                        <a href="{{ settings.vk_link }}" class="text-light-secondary hover:text-accent"><i class="fab fa-vk text-2xl"></i></a>
-                        {% endif %}
-                        {% if settings and settings.telegram_link %}
-                        <a href="{{ settings.telegram_link }}" class="text-light-secondary hover:text-accent"><i class="fab fa-telegram text-2xl"></i></a>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+    {% include 'includes/footer.html' %}
 
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/components/counters.js' %}"></script>
