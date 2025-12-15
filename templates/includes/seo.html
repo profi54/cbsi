@@ -1,83 +1,48 @@
-{% load static %}
-
-<meta name="description" content="{% block meta_description %}Профессиональные полиграфологические исследования в Сибирском регионе. Современное оборудование, конфиденциальность, официальные заключения.{% endblock %}">
-<meta name="author" content="ЦВСИ - Сибирский центр выявления скрываемой информации">
-
-
-<meta property="og:title" content="{% block og_title %}ЦВСИ - Сибирский центр выявления скрываемой информации{% endblock %}">
-<meta property="og:description" content="{% block og_description %}Профессиональные полиграфологические исследования. Современное оборудование, конфиденциальность, официальные заключения.{% endblock %}">
-<meta property="og:type" content="website">
-<meta property="og:url" content="{{ request.build_absolute_uri }}">
-<meta property="og:image" content="{% block og_image %}{% static 'images/og-image.jpg' %}{% endblock %}">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:site_name" content="ЦВСИ - Сибирский центр выявления скрываемой информации">
-<meta property="og:locale" content="ru_RU">
-
-
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="{% block twitter_title %}ЦВСИ - Сибирский центр выявления скрываемой информации{% endblock %}">
-<meta name="twitter:description" content="{% block twitter_description %}Профессиональные полиграфологические исследования. Современное оборудование, конфиденциальность.{% endblock %}">
-<meta name="twitter:image" content="{% block twitter_image %}{% static 'images/og-image.jpg' %}{% endblock %}">
-
-
-<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-<meta name="googlebot" content="index, follow">
-<link rel="canonical" href="https://полиграф-54.рф{{ request.path }}">
-
-
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  "name": "ЦВСИ - Сибирский центр выявления скрываемой информации",
-  "description": "Профессиональные полиграфологические исследования в Сибирском регионе",
-  "url": "https://полиграф-54.рф",
-  "telephone": "{% if settings %}{{ settings.phone }}{% else %}+7 (999) 123-45-67{% endif %}",
-  "email": "{% if settings %}{{ settings.email }}{% else %}info@cbsi.ru{% endif %}",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "{% if settings %}{{ settings.address }}{% else %}г. Новосибирск{% endif %}"
-  },
-  "areaServed": "Сибирский федеральный округ",
-  "serviceType": "Полиграфологические исследования",
-  "openingHours": "Mo-Fr 09:00-18:00",
-  "priceRange": "$$"
-}
-</script>
-
-<!-- LocalBusiness микроразметка -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "name": "ЦВСИ - Сибирский центр выявления скрываемой информации",
-  "image": "{% static 'images/og-image.jpg' %}",
-  "description": "Профессиональные полиграфологические исследования в Сибирском регионе",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "{% if settings %}{{ settings.address }}{% else %}г. Новосибирск{% endif %}",
-    "addressRegion": "Сибирский федеральный округ",
-    "addressCountry": "RU"
-  },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": "55.0084",
-    "longitude": "82.9357"
-  },
-  "url": "https://полиграф-54.рф",
-  "telephone": "{% if settings %}{{ settings.phone }}{% else %}+7 (999) 123-45-67{% endif %}",
-  "openingHours": "Mo-Fr 09:00-18:00",
-  "priceRange": "от 5000 руб.",
-  "serviceArea": {
-    "@type": "GeoCircle",
-    "geoMidpoint": {
-      "@type": "GeoCoordinates",
-      "latitude": "55.0084",
-      "longitude": "82.9357"
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Что такое полиграф и как он работает?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Полиграф — это техническое устройство для проведения психофизиологических исследований. Он синхронно регистрирует физиологические параметры (дыхание, сердечно-сосудистую активность, электропроводимость кожи) в ответ на вопросы[citation:1][citation:5]. Специалист анализирует изменения этих реакций для оценки достоверности информации."
+      }
     },
-    "geoRadius": "500000"
-  }
+    {
+      "@type": "Question",
+      "name": "Сколько по времени длится проверка на полиграфе?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Полная процедура, включая предварительную беседу, тестирование и анализ, в среднем занимает от 2 до 4 часов[citation:3][citation:7]. Это необходимо для соблюдения методологии и получения достоверного результата."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Какова точность проверки на полиграфе?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "При соблюдении всех стандартов методологии точность профессиональных полиграфологических исследований оценивается на уровне 95–98%[citation:5]. На результат влияют квалификация специалиста, качество оборудования и условия проведения теста."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Можно ли обмануть полиграф (детектор лжи)?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Полиграф регистрирует непроизвольные физиологические реакции, которые крайне сложно полностью контролировать сознательно[citation:5]. Опытный полиграфолог обучен выявлять признаки попыток противодействия (например, искусственное вызывание стресса или прием препаратов), которые сами по себе трактуются как негативный результат[citation:6]. Успешное противодействие требует специальной длительной подготовки[citation:2]."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Какие вопросы задают во время проверки на полиграфе?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Используются три типа вопросов[citation:5]: 1) Релевантные (прямо связанные с расследованием), 2) Контрольные (для сравнения уровня реакций) и 3) Нейтральные. Все вопросы обсуждаются с проверяемым до начала тестирования."
+      }
+    }
+  ]
 }
 </script>
-<meta name="msvalidate.01" content="1D95A76B7BA485C83A5E9FCEE0326648" />
