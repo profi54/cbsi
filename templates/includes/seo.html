@@ -1,83 +1,109 @@
-{% load static %}
-
-<meta name="description" content="{% block meta_description %}Профессиональные полиграфологические исследования в Сибирском регионе. Современное оборудование, конфиденциальность, официальные заключения.{% endblock %}">
+<!-- Основные мета-теги -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Профессиональная проверка на полиграфе (детекторе лжи) в Новосибирске и по всей Сибири. Узнайте, сколько длится процедура, как она проходит, и можно ли обмануть полиграф. Точность до 98%. Конфиденциально. Запись онлайн.">
 <meta name="author" content="ЦВСИ - Сибирский центр выявления скрываемой информации">
+<meta name="keywords" content="полиграф, детектор лжи, проверка на полиграфе, полиграф Новосибирск, сколько длится проверка на полиграфе, можно ли обмануть полиграф, точность полиграфа, вопросы на полиграфе, проверка сотрудников, расследование краж">
 
-
-<meta property="og:title" content="{% block og_title %}ЦВСИ - Сибирский центр выявления скрываемой информации{% endblock %}">
-<meta property="og:description" content="{% block og_description %}Профессиональные полиграфологические исследования. Современное оборудование, конфиденциальность, официальные заключения.{% endblock %}">
+<!-- Open Graph / Facebook -->
+<meta property="og:title" content="Проверка на полиграфе в Новосибирске | ЦВСИ - Достоверно, конфиденциально">
+<meta property="og:description" content="Профессиональные полиграфологические исследования. Узнайте правду с точностью до 98%. Проверка персонала, расследования, личные вопросы.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="{{ request.build_absolute_uri }}">
-<meta property="og:image" content="{% block og_image %}{% static 'images/og-image.jpg' %}{% endblock %}">
+<meta property="og:url" content="https://полиграф-54.рф">
+<meta property="og:image" content="/static/images/og-image.jpg"> <!-- Убедитесь, что изображение существует! -->
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:site_name" content="ЦВСИ - Сибирский центр выявления скрываемой информации">
 <meta property="og:locale" content="ru_RU">
 
-
+<!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="{% block twitter_title %}ЦВСИ - Сибирский центр выявления скрываемой информации{% endblock %}">
-<meta name="twitter:description" content="{% block twitter_description %}Профессиональные полиграфологические исследования. Современное оборудование, конфиденциальность.{% endblock %}">
-<meta name="twitter:image" content="{% block twitter_image %}{% static 'images/og-image.jpg' %}{% endblock %}">
+<meta name="twitter:title" content="Проверка на полиграфе в Новосибирске | ЦВСИ">
+<meta name="twitter:description" content="Профессиональные полиграфологические исследования. Современное оборудование, конфиденциальность, официальные заключения.">
+<meta name="twitter:image" content="/static/images/og-image.jpg">
 
-
+<!-- Инструкции для поисковых роботов -->
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 <meta name="googlebot" content="index, follow">
+<!-- Каноническая ссылка (исправлена, без пробелов в URL) -->
 <link rel="canonical" href="https://полиграф-54.рф{{ request.path }}">
 
-
+<!-- Schema.org микроразметка: Одна объединенная и исправленная структура -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  "name": "ЦВСИ - Сибирский центр выявления скрываемой информации",
-  "description": "Профессиональные полиграфологические исследования в Сибирском регионе",
-  "url": "https://полиграф-54.рф",
-  "telephone": "{% if settings %}{{ settings.phone }}{% else %}+7 (999) 123-45-67{% endif %}",
-  "email": "{% if settings %}{{ settings.email }}{% else %}info@cbsi.ru{% endif %}",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "{% if settings %}{{ settings.address }}{% else %}г. Новосибирск{% endif %}"
-  },
-  "areaServed": "Сибирский федеральный округ",
-  "serviceType": "Полиграфологические исследования",
-  "openingHours": "Mo-Fr 09:00-18:00",
-  "priceRange": "$$"
-}
-</script>
-
-<!-- LocalBusiness микроразметка -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "name": "ЦВСИ - Сибирский центр выявления скрываемой информации",
-  "image": "{% static 'images/og-image.jpg' %}",
-  "description": "Профессиональные полиграфологические исследования в Сибирском регионе",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "{% if settings %}{{ settings.address }}{% else %}г. Новосибирск{% endif %}",
-    "addressRegion": "Сибирский федеральный округ",
-    "addressCountry": "RU"
-  },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": "55.0084",
-    "longitude": "82.9357"
-  },
-  "url": "https://полиграф-54.рф",
-  "telephone": "{% if settings %}{{ settings.phone }}{% else %}+7 (999) 123-45-67{% endif %}",
-  "openingHours": "Mo-Fr 09:00-18:00",
-  "priceRange": "от 5000 руб.",
-  "serviceArea": {
-    "@type": "GeoCircle",
-    "geoMidpoint": {
-      "@type": "GeoCoordinates",
-      "latitude": "55.0084",
-      "longitude": "82.9357"
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://полиграф-54.рф/#service",
+      "name": "ЦВСИ - Сибирский центр выявления скрываемой информации",
+      "description": "Профессиональные полиграфологические исследования (проверка на детекторе лжи) в Новосибирске и Сибирском регионе.",
+      "url": "https://полиграф-54.рф",
+      "telephone": "+79665000106",
+      "email": "proverkipoligrafom@yandex.ru",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "г. Новосибирск, ул. Тимирязева 58/1, этаж 3, офис 107",
+        "addressRegion": "Новосибирская область",
+        "addressCountry": "RU"
+      },
+      "areaServed": {
+        "@type": "GeoCircle",
+        "geoMidpoint": { "@type": "GeoCoordinates", "latitude": 55.0084, "longitude": 82.9357 },
+        "geoRadius": "500000"
+      },
+      "openingHours": ["Mo-Fr 09:00-18:00"],
+      "priceRange": "от 5000 руб.",
+      "serviceType": "Полиграфологические исследования"
     },
-    "geoRadius": "500000"
-  }
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Что такое полиграф (детектор лжи) и как он работает?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Полиграф — это прибор для регистрации физиологических реакций (дыхание, пульс, потоотделение) в ответ на вопросы. Он не читает мысли, а фиксирует стресс организма, связанный с сознательным искажением информации."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Сколько по времени длится проверка на полиграфе?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Полная процедура, включая беседу и анализ, в среднем занимает от 2 до 4 часов. Это необходимо для соблюдения методологии и получения достоверного результата."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Какова точность проверки на полиграфе?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "При соблюдении всех стандартов точность профессиональной полиграфологической проверки составляет 95–98%."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Можно ли обмануть полиграф? Что такое противодействие?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Полиграф регистрирует непроизвольные реакции, которые крайне сложно контролировать. Попытки противодействия (например, задержка дыхания, мысленный счет) вызывают характерные физиологические артефакты, которые сразу фиксирует опытный специалист. Успешное противодействие маловероятно."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Какие вопросы задают на полиграфе? Что такое контрольные вопросы и стимулы?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Используются три типа вопросов (стимулов): 1) Релевантные (по делу), 2) Контрольные (для сравнения уровня реакций), 3) Нейтральные. Все вопросы обсуждаются ДО теста. Цель контрольных — создать научную основу для объективного анализа."
+          }
+        }
+      ]
+    }
+  ]
 }
 </script>
-<meta name="msvalidate.01" content="1D95A76B7BA485C83A5E9FCEE0326648" />
+
+<!-- Верификация для Microsoft (исправленный тег, без /) -->
+<meta name="msvalidate.01" content="1D95A76B7BA485C83A5E9FCEE0326648">
